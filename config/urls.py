@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path ,include
+from Login.views import CustomPasswordChangeView
 
 urlpatterns = [
     #admin
@@ -23,5 +24,12 @@ urlpatterns = [
     
     #app
     path('', include('Login.urls')),
+    
+    path(
+        'password/change/',
+        CustomPasswordChangeView.as_view(),
+        name ="account_change_password",
+        ),
+    
     path('', include('allauth.urls')),
 ]

@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}로그인 | Coplate{% endblock title %}
+
+{% block content %}
+<div class="account-background">
+  <main class="account">
+    <div class="title">
+      <a href="{%url 'index' %}">
+        <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo">
+      </a>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <!-- form 전체 에러(이메일 패스워드 조합 오류)-->
+        {% for error in form.non_field_errors %}
+          <div class="form-error error-message">{{error}}</div>
+        {% endfor %}
+      <div>
+        <!--input태그를 장고의 form 태그로 바꾸기-->
+        {{form.login|add_class:"cp-input"|attr:"placeholder=이메일"|add_error_class:"error"}}<!--attr: 태그에 새로운 속성이 있으면 추가 없으면 그대로-->
+        {% for error in form.login.errors %}
+          <div class="form-error error-message">{{error}}</div>
+        {% endfor %}
+      </div>
+      <div>
+        {{form.password|add_class:"cp-input"|attr:"placeholder=비밀번호"|add_error_class:"error"}}
+        {% for error in form.password.errors %}
+          <div class="form-error error-message">{{error}}</div>
+        {% endfor %}
+      </div>
+      <button class="cp-button" type="submit">로그인</button>
+    </form>
+    
+    <div class="info">
+      <a class="item" href="{% url 'account_reset_password'%}">비밀번호 찾기</a>
+      <a class="item" href="{% url 'account_signup'%}">회원가입</a>
+    </div>
+  </main>
+</div>
+{% endblock content %}
