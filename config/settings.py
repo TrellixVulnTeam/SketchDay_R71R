@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'Login',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,11 +106,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
 TIME_ZONE = 'UTC'
 
@@ -118,3 +132,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/uploads/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "Login.User"
+
+# url 설정
+ACCOUNT_SIGNUP_REDIRECT_URL="index" # 회원가입을 하면 index로 이동
+LOGIN_REDIRECT_URL="index" # 로그인을 하면 index로 이동
+LOGIN_REDIRECT_URL="index" # 로그인을 하면 index로 이동
+LOGIN_URL = 'account_login' # 로그인이 안 된다면 로그인 페이지로 이동
+ACCOUNT_LOGOUT_ON_GET=True # 바로 로그아웃 (기본 값은 False)
+ACCOUNT_AUTHENTICATION_METHOD="email"  # email로 유저 로그인
+ACCOUNT_EMAIL_REQUIRED = True  #회원가입시 email 필수
+ACCOUNT_USERNAME_REQUIRED = False #회원가입시 username 선택
+ACCOUNT_SIGNUP_FORM_CLASS = "Login.forms.SignupForm" # 재정의한 회원가입 폼 사용
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
+ACCOUNT_SESSION_REMEMBER= True # 유저 기억
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True #이메일 인증링크로 들어가면 바로인증 되게함
+
+
+# 로그인시 이메일 인증이 되었을때 /되지 않았을때 인증 URL 설정
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL="account_email_confirmation_done"
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL="account_email_confirmation_done"
+
+# Email settings 이메일 인증을 위함 => 터미널 콘솔로 이메일 보내기
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
