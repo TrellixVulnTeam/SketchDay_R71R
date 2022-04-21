@@ -2,16 +2,19 @@
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" type="text/css" href="{% static 'Login/styles/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'Login/styles/theme.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'Login/favicon/favicon.ico' %}">
 
     <title>{% block title %}SketchDay{% endblock title %}</title>
-</head>
-    <body>
-        {% block header %}{% endblock header %}
-        {% block content %}{% endblock content %}
-        {% block footer %}{% endblock footer %}
-    </body>
+  </head>
+  <body>
+    {% block header %}{% endblock header %}
+    {% block content %}{% endblock content %}
+    {% block footer %}{% endblock footer %}
+  </body>
 </html>

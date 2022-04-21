@@ -1,11 +1,12 @@
-{% extends "coplate_base/base.html" %}
+{% extends "base/base.html" %}
 
 {% load static %}
 
 {% block header %}
 <header class="site-header only-logo max-content-width">
-  <a href="{% url '#' %}">
-    <img class="logo" src="{% static 'app/assets/Logo.png' %}" alt="Logo">
+  <a href="{% url 'index' %}">
+    <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo">
   </a>
 </header>
 {% endblock header %}
+

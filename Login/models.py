@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from .validators import validate_no_special_characters, validate_restaurant_link
 # Create your models here.
 
 class User(AbstractUser):
@@ -9,9 +9,11 @@ class User(AbstractUser):
         max_length=15, 
         unique=True,
         null=True,
+        validators = [validate_no_special_characters],
         error_messages={'unique' : "이미 사용중인 닉네임 입니다."}
         )
     
     # 기본값을 username 에서 email로 변환
     def __str__(self):
         return self.email
+    
