@@ -35,9 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    "debug_toolbar",
     'Login',
     'diary',
     'widget_tweaks',
+    'bootstrap5',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -153,3 +156,6 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX =""
 
 # Email settings 이메일 인증을 위함 => 터미널 콘솔로 이메일 보내기
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Django-debug-toolbar settings
+INTERNAL_IPS = ['127.0.0.1']
