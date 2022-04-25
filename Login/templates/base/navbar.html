@@ -4,30 +4,36 @@
 
 {% block header %}
 <header class="site-header navbar">
-  <div class="content max-width">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a href="{% url 'index' %}">
-          <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo" style="max-height:40px">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarColor03">
-          <ul class="navbar-nav me-auto">
-            {% if user.is_authenticated %}
-              <li><a class="nav-link" href="{% url 'account_logout' %}">로그아웃</a></li>
-            {% else %}
-              <li><a class="nav-link" href="{% url 'account_login' %}">로그인</a></li>
-              <li><a class="nav-link" href="{% url 'account_signup' %}">회원가입</a></li>
-            {% endif %}
-          </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a href="{% url 'main' %}">
+      <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo" style="max-height:40px; border-radius: 40%;">
+    </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav me-auto">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <li><a class="nav-link" href="{% url 'account_logout' %}">로그아웃</a></li>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <li><a class="nav-link" href="{% url 'account_login' %}">로그인</a></li>
+          </li>
+          <li class="nav-item">
+            <li><a class="nav-link" href="{% url 'account_signup' %}">회원가입</a></li>
+          </li>
+          {% endif %}
+        </ul>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
+
+
 {% endblock header %}
 
 {% block footer %}
