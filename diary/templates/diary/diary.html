@@ -3,6 +3,14 @@
 {% load static %}
 
 {% block content %}
+<div class="post-list">
+  <div class="header">
+    <h2>감정 일기</h2>
+    <a class="link" href="{% url 'diary-create' %}">
+      <span>일기 작성</span>
+    </a>
+  </div>
+
 <div class="posts">
     {% for diary in diarys%}
       <div class="podo-card post">
@@ -10,13 +18,13 @@
         <div class="content">
           <h2 class="title">{{diary.title}}</h2>
           <div class="meta">
-            {{diary.dt_created|date:'Y.m.d'}}&nbsp;
+            {{diary.dt_created}}
           </div>
-          <a class="podo-button primary button" href="#">자세히보기</a>
+          <a class="podo-button primary button" href="{% url 'diary-detail' diary.id %}">자세히보기</a>
         </div>
       </div>
         {% empty %}
-        <p class="empty">판매중인 상품이 없어요 :(</p>
-    {% endfor %}
+        <p class="empty">작성된 일기가 없어요 :(</p>
+    {% endfor %} 
 </div>
 {% endblock content %}
