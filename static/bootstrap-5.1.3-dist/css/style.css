@@ -248,7 +248,7 @@
  }
  
  a:hover {
-   color: #292929;
+   color: #7c7c7c;
  }
  
  a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -1904,7 +1904,7 @@
    --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
    --bs-table-active-color: #212529;
    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
-   --bs-table-hover-color: #212529;
+   --bs-table-hover-color: #7c7c7c;
    --bs-table-hover-bg: #fff;
    width: 100%;
    margin-bottom: 1rem;
@@ -2002,7 +2002,7 @@
    --bs-table-active-bg: #bfd5c4;
    --bs-table-active-color: #000;
    --bs-table-hover-bg: #c4dbca;
-   --bs-table-hover-color: #000;
+   --bs-table-hover-color: #7c7c7c;
    color: #000;
    border-color: #bfd5c4;
  }
@@ -3074,7 +3074,7 @@
  }
  
  .btn:hover {
-   color: #212529;
+   color: #7c7c7c;
  }
  
  .btn-check:focus + .btn, .btn:focus {
@@ -3104,13 +3104,13 @@
  .btn-primary:hover {
    color: #fff;
    background-color: #2b2b2b;
-   border-color: #292929;
+   border-color: #7c7c7c;
  }
  
  .btn-check:focus + .btn-primary, .btn-primary:focus {
    color: #fff;
    background-color: #2b2b2b;
-   border-color: #292929;
+   border-color: #f5f1f1;
    box-shadow: 0 0 0 0.25rem rgba(82, 82, 82, 0.5);
  }
  

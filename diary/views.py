@@ -22,7 +22,7 @@ class DiaryDetailView(DetailView):
     model = Diary
     template_name = 'diary/diary_detail.html'
     pk_url_kwarg = 'diary_id'
-
+    
 # 일기 작성
 class DiaryCreateView(CreateView):
     model = Diary
@@ -32,7 +32,9 @@ class DiaryCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-
+    
+    
+    
     def get_success_url(self):
         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
     
