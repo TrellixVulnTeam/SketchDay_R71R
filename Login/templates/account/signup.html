@@ -6,38 +6,34 @@
 {% block title %}회원가입 | SketchDay{% endblock title %}
 
 {% block content %}
-<div class="account-background">
-  <main class="account">
-    <div class="title">
+<div class="signup">
+  <form method="post">
       <a href="{%url 'index' %}">
         <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo">
       </a>
-    </div>
-
-    <form method="post">
       {% csrf_token %}
-      <div>
+      <div class="email">
         {{form.email|add_class:"form-control"|attr:"placeholder=이메일"|add_error_class:"error"}}<!--attr: 태그에 새로운 속성이 있으면 추가 없으면 그대로-->
         <!--에러 처리 |add_error_class:"error" 추가 -->
         {% for error in form.email.errors  %}   
           <div class="error-message">{{error}}</div>
         {% endfor %}
       </div>
-      <div>
-        {{form.nickname|add_class:"form-control"|attr:"placeholder=닉네임"|add_error_class:"error"}}
-        {% for error in form.nickname.errors  %}
-          <div class="error-message">{{error}}</div>
-        {% endfor %}
-      </div>
-      <div>
+      <div class="password1">
         {{form.password1|add_class:"form-control"|attr:"placeholder=비밀번호"|add_error_class:"error"}}
         {% for error in form.password1.errors  %}
           <div class="error-message">{{error}}</div>
         {% endfor %}
       </div>
-      <div>
+      <div class="password2">
         {{form.password2|add_class:"form-control"|attr:"placeholder=비밀번호 확인"|add_error_class:"error"}}
         {% for error in form.password2.errors  %}
+          <div class="error-message">{{error}}</div>
+        {% endfor %}
+      </div>
+      <div class="nickname">
+        {{form.nickname|add_class:"form-control"|attr:"placeholder=닉네임"|add_error_class:"error"}}
+        {% for error in form.nickname.errors  %}
           <div class="error-message">{{error}}</div>
         {% endfor %}
       </div>
@@ -47,6 +43,5 @@
     <div class="info">
       이미 회원이신가요?<a class="link" href="{%url 'account_login' %}">로그인</a>
     </div>
-  </main>
-</div>
+  </div>
 {% endblock content %}

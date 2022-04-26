@@ -46,7 +46,8 @@ class DiaryUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
-    
+
+# 일기 삭제
 class DiaryDeleteView(DeleteView):
     model = Diary
     template_name = 'diary/diary_delete.html'

@@ -7,24 +7,31 @@
 {% block title %}{{ diary.title }} | SketchDay{% endblock title %}
 
 {% block content %}
-<div class="diary-detail">
+<div class="post-detail">
     <div class="header">
       <a href="{% url 'main' %}">&lt; 목록으로</a>
       {% if diary.author == user%}
       <div class="buttons">
-        <a class="podo-button small negative" href="{% url 'diary-delete' diary.id%}">삭제</a>
-        <a class="podo-button small secondary" href="{% url 'diary-update' diary.id%}">수정</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>
+        <a class="btn btn-primary btn-sm" href="{% url 'diary-update' diary.id%}">수정</a>
       </div>
       {% endif %}
     </div>
     <article>
-      <img class="image" src="{{ diary.image1.url }}">
-      <div class="diary-meta">
-        <h2 class="title">{{ diary.title }}</h2>
-        <div class="item-info">
-        <div class="podo-chip primary">내용 {{ diary.content }}</div>
-          <span class="date">{{ diary.dt_created|date:"Y.m.d" }}</span>
-        </div>
-        
+      {% comment %} <img class="image" src="{{ diary.image1.url }}"> {% endcomment %}
+      <div class="post-meta">
+          <div class="item-info">  
+            <div  class="title">{{ diary.title }} </div>
+            <span class="date">{{ diary.dt_created|date:"Y.m.d" }}</span>
+      </div>
+      <div class="nickname">작성자 : {{ diary.author.nickname }}</div>
+    </div>
+    <p class="item-detail">
+      {{ diary.content |linebreaksbr }}
+    </p>  
+    </article>
+</div>
+
+
 
 {% endblock content %}
