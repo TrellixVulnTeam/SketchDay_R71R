@@ -66,15 +66,14 @@ class BERTDataset(Dataset):
 
 class EmotionAnalysis:
     def __init__(self):
-        cal_dev = 'cpu'
-        self.device = torch.device(cal_dev) 
+        self.cal_dev = 'cpu'
+        self.device = torch.device(self.cal_dev) 
         bertmodel, vocab = get_pytorch_kobert_model()
         self.model = BERTClassifier(bertmodel,  dr_rate=0.5)
-        self.model.load_state_dict(torch.load('diary/ml_models/real_model.pt', map_location=cal_dev))
         # self.model = torch.load('model1.pt')
 
     def predict(self, input_data):
-
+        self.model.load_state_dict(torch.load('diary/ml_models/real_model.pt', map_location=self.cal_dev))
         bertmodel, vocab = get_pytorch_kobert_model()
 
         max_len = 100
@@ -117,4 +116,4 @@ class EmotionAnalysis:
                 elif np.argmax(logits) == 4:
                     test_eval.append("행복")
             print(">> 입력하신 내용에서 " + test_eval[0] + "이 느껴집니다.")
-        return ">> 입력하신 내용에서 " + test_eval[0] + "이 느껴집니다."
+        return test_eval[0]

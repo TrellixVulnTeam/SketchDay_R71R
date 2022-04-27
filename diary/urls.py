@@ -11,8 +11,11 @@ urlpatterns = [
         name='diary-detail'),
     
     #일기작성
+    # path('new/', 
+    #     views.DiaryCreateView.as_view(), 
+    #     name='diary-create'),
     path('new/', 
-        views.DiaryCreateView.as_view(), 
+        views.diaryCreateView, 
         name='diary-create'),
     
     #일기 수정

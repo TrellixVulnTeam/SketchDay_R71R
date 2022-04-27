@@ -6,6 +6,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from diary.models import Diary
 from diary.forms import DiaryCreateForm
 
+from .ml import emotional_analysis
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 # Create your views here.
 
@@ -24,20 +28,41 @@ class DiaryDetailView(DetailView):
     pk_url_kwarg = 'diary_id'
     
 # 일기 작성
-from .ml import emotional_analysis
-class DiaryCreateView(CreateView):
-    model = Diary
-    form_class = DiaryCreateForm
-    template_name = 'diary/diary_form.html'
-    # emotion_model = emotional_analysis.EmotionAnalysis()
-    # model.emotion = emotion_model.predict({"data":model.content})
+# class DiaryCreateView(CreateView):
+#     model = Diary
+#     form_class = DiaryCreateForm
+#     template_name = 'diary/diary_form.html'
+#     # emotion_model = emotional_analysis.EmotionAnalysis()
+#     # model.emotion = emotion_model.predict({"data":model.content})
+
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         return super().form_valid(form)
     
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-    
-    def get_success_url(self):
-        return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+#     def get_success_url(self):
+#         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+
+# 일기 작성 - 감정분석 수행되도록 수정
+@login_required
+def diaryCreateView(request):
+    if request.method == 'POST':
+        form = DiaryCreateForm(request.POST)
+        if form.is_valid():
+            # post = form.save(commit=True)
+            post = form.save(commit=False)
+            post.author = request.user  # 현재 로그인 user instance
+            emotion_model = emotional_analysis.EmotionAnalysis()
+            post.emotion = emotion_model.predict({"data":post.content})
+            post.save()
+            messages.success(request, '포스팅을 저장했습니다.')
+            return redirect('main')
+    else:
+        form = DiaryCreateForm()
+
+    return render(request, 'diary/diary_form.html',{
+        'form': form,
+        'post': None,
+    })
 
 # 일기 수정
 class DiaryUpdateView(UpdateView):
