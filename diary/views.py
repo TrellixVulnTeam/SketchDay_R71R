@@ -24,21 +24,21 @@ class DiaryDetailView(DetailView):
     pk_url_kwarg = 'diary_id'
     
 # 일기 작성
+from .ml import emotional_analysis
 class DiaryCreateView(CreateView):
     model = Diary
     form_class = DiaryCreateForm
     template_name = 'diary/diary_form.html'
+    # emotion_model = emotional_analysis.EmotionAnalysis()
+    # model.emotion = emotion_model.predict({"data":model.content})
     
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-    
-    
     def get_success_url(self):
         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
-    
-    
+
 # 일기 수정
 class DiaryUpdateView(UpdateView):
     model = Diary

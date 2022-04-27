@@ -8,6 +8,9 @@ db.sqlite3
 db.sqlite3-journal
 media
 
+# 각 모델
+diary/ml_models/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
