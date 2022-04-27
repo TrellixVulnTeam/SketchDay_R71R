@@ -40,6 +40,9 @@ urlpatterns = [
         ),
     
     path('', include('allauth.urls')),
+
+    # 달력
+    path('calendar/', include('emotion_calendar.urls'), name='calendar')
 ]
 # 개발 모드에서만 디버그, 배포에서는 동작 안함
 if settings.DEBUG:
