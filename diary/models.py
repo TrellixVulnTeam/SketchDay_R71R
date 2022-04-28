@@ -22,6 +22,8 @@ class Diary(models.Model):
     comment_TF = models.BooleanField(choices=TF_COMMENT, default=True)
     image = models.ImageField(blank=True, upload_to ='item_pics')
     emotion = models.CharField(max_length=20)
+    vector = models.CharField(max_length=65535)
+    music_no = models.IntegerField()
     
 
     # User 모델 접근

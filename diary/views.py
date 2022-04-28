@@ -2,14 +2,17 @@ from django.shortcuts import render
 from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from numpy import rec
 
 from diary.models import Diary
 from diary.forms import DiaryCreateForm
 
 from .ml_models import emotional_analysis
+from .ml_models import recommendation_ml
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from diary import apps
 
 # Create your views here.
 
@@ -51,6 +54,8 @@ def diaryCreateView(request):
             # post = form.save(commit=True)
             post = form.save(commit=False)
             post.author = request.user  # 현재 로그인 user instance
+            post.vector = recommendation_ml.get_vector(post.content)
+            post.music_no = recommendation_ml.get_recommendation(post.vector)
             emotion_model = emotional_analysis.EmotionAnalysis()
             post.emotion = emotion_model.predict({"data":post.content})
             post.save()
