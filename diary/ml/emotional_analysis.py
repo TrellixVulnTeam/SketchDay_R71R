@@ -8,9 +8,9 @@ import numpy as np
 from tqdm import tqdm, tqdm_notebook
 
 #kobert
-from kobert.utils import get_tokenizer
-from kobert.pytorch_kobert import get_pytorch_kobert_model
-from kobert_tokenizer import KoBERTTokenizer
+from diary.ml.KoBert.kobert import get_tokenizer
+from diary.ml.KoBert.kobert.pytorch_kobert import get_pytorch_kobert_model
+from diary.ml.KoBert.kobert_hf.kobert_tokenizer import KoBERTTokenizer
 
 #transformers
 from transformers import AdamW
