@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .ml import emotional_analysis
+from .ml_models import emotional_analysis
 # Create your tests here.
 class MLTests(TestCase):
     def test_ea_algorithm(self):

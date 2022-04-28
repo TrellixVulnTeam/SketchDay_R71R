@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from diary.models import Diary
 from diary.forms import DiaryCreateForm
 
-from .ml import emotional_analysis
+from .ml_models import emotional_analysis
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
