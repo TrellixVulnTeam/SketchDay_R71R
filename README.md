@@ -4,10 +4,13 @@
 # 목차
 [1. 조원 소개](#1.-조원-소개)
 
-2. [배경 및 목적](#2.-배경-및-목적)
-3. [Service Flow](#3.-service-flow)
-4. [Architecture - 3 - Tier](#4.-architecture---3---tier)
-5. [ERD](#5.-erd)
+[2. 배경 및 목적](#2.-배경-및-목적)
+
+[3. Service Flow](#3.-service-flow)
+
+[4. Architecture - 3 - Tier](#4.-architecture---3---tier)
+
+[5. ERD](#5.-erd)
 # 1. 조원 소개
 #### [5조]수도권 2반 2조
 >  김동현(조장), 강민서, 김세진, 전성호, 황인원
