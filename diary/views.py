@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -14,6 +14,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from diary import apps
 
+import json
+
 # Create your views here.
 
 # main 화면 일단은 일기 리스트 보여줌
@@ -25,11 +27,30 @@ class MainView(ListView):
     ordering = ['-dt_created']
 
 # 일기 세부 내용
-class DiaryDetailView(DetailView):
-    model = Diary
-    template_name = 'diary/diary_detail.html'
-    pk_url_kwarg = 'diary_id'
+# class DiaryDetailView(DetailView):
+#     model = Diary
+#     template_name = 'diary/diary_detail.html'
+#     pk_url_kwarg = 'diary_id'
+#     # model.emotion_value = jsonDec.decode(model.emotion_value)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         jsonDec = json.decoder.JSONDecoder()
+#         context['emotion_value'] = [0,1]
+#         return context
+
+@login_required
+def diaryDetailView(request, diary_id):
+    qs = get_object_or_404(Diary, pk=diary_id)
+    jsonDec = json.decoder.JSONDecoder()
     
+    try:
+        qs.emotion_value = jsonDec.decode(qs.emotion_value)
+    except:
+        pass
+    context = {'diary': qs}
+
+    return render(request, 'diary/diary_detail.html',context)
+
 # 일기 작성
 # class DiaryCreateView(CreateView):
 #     model = Diary
@@ -57,16 +78,19 @@ def diaryCreateView(request):
             post.vector = recommendation_ml.get_vector(post.content)
             post.music_no = recommendation_ml.get_recommendation(post.vector)
             emotion_model = emotional_analysis.EmotionAnalysis()
-            post.emotion = emotion_model.predict({"data":post.content})
+            emotion_val = emotion_model.predict({"data":post.content})
+            post.emotion = emotion_val[1]
+            # print(emotion_val[0])
+            # print(type(emotion_val[0]))
+            post.emotion_value = json.dumps(emotion_val[0])
             post.save()
-            messages.success(request, '포스팅을 저장했습니다.')
+            # messages.success(request, '포스팅을 저장했습니다.')
             return redirect('main')
     else:
         form = DiaryCreateForm()
 
     return render(request, 'diary/diary_form.html',{
         'form': form,
-        'post': None,
     })
 
 # 일기 수정

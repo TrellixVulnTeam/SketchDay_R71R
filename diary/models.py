@@ -24,7 +24,7 @@ class Diary(models.Model):
     emotion = models.CharField(max_length=20)
     vector = models.CharField(max_length=65535)
     music_no = models.IntegerField()
-    
+    emotion_value = models.TextField()
 
     # User 모델 접근
     author = models.ForeignKey(User, on_delete=models.CASCADE)
