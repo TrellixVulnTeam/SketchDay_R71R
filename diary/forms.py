@@ -11,7 +11,7 @@ class DiaryCreateForm(forms.ModelForm):
             'public_TF',
             'comment_TF',
             'dt_created',
-                ]
+            ]
         
         widgets ={
             'public_TF': forms.RadioSelect(),

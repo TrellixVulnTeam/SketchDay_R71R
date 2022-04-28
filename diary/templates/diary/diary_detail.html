@@ -29,10 +29,36 @@
     <p class="item-detail">
       {{ diary.content |linebreaksbr }}
     </p>  
+    <p>{{ diary.emotion_val }}</p>
     </article>
-    <p>{{ diary.emotion }}</p>
+    <div style="display: flex; justify-content: center">
+      <div class="chart-container" style="height: 500px; width:500px">
+        <p style="text-align: center; font-size: 1.5rem">오늘은 {{ diary.emotion }} 하셨군요!</p>
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
 </div>
-
-
+<script>
+var emotion_pie = document.getElementById('myChart').getContext('2d');
+var emotionPieChart = new Chart(emotion_pie, {
+    type: 'pie',
+    data:{
+        labels: [ '불안', '분노' , '슬픔' , '평온' , '행복' ],
+        datasets: [{
+            data: {{ diary.emotion_value }},
+            backgroundColor: [
+                "#f7323f",
+                "#673ba7",
+                "#ff6384",
+                "#cc65fe",
+                "#ffce56",
+            ],
+            borderWidth: 0
+        }]
+    }
+});
+</script>
 
 {% endblock content %}

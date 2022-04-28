@@ -6,8 +6,11 @@ urlpatterns = [
     path('', views.MainView.as_view(), name='main'),
     
     #일기 내용
+    # path('detail/<int:diary_id>/', 
+    #     views.DiaryDetailView.as_view(), 
+    #     name='diary-detail'),
     path('detail/<int:diary_id>/', 
-        views.DiaryDetailView.as_view(), 
+        views.diaryDetailView, 
         name='diary-detail'),
     
     #일기작성

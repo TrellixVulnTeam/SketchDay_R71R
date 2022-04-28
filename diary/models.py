@@ -22,7 +22,7 @@ class Diary(models.Model):
     comment_TF = models.BooleanField(choices=TF_COMMENT, default=True)
     image = models.ImageField(blank=True, upload_to ='item_pics')
     emotion = models.CharField(max_length=20)
-    
+    emotion_value = models.TextField()
 
     # User 모델 접근
     author = models.ForeignKey(User, on_delete=models.CASCADE)
