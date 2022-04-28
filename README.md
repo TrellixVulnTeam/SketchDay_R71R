@@ -16,3 +16,5 @@
   * 다른 사람의 일기를 공유 받고 싶은 사람
   * 자신의 일기를 그림일기로 남기고 싶은 사람
 # 3. Service Flow
+![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
+# 4.  Architecture - 3 - Tier
