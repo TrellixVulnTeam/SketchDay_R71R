@@ -14,10 +14,10 @@
 {% endif %}
 <div class="post-list">
   <div class="header">
-    <h2>공유 된 일기</h2>
-    <a class="btn btn-primary" href="{% url 'my-diary' %}">
-      <span>내 일기</span>
-    </a>
+    <h2>내가 쓴 일기</h2>
+    <a class="btn btn-primary" href="{% url 'main' %}">
+        <span>공유 일기</span>
+      </a>
     <a class="btn btn-primary" href="{% url 'diary-create' %}">
       <span>일기 작성</span>
     </a>
@@ -39,30 +39,30 @@
         {% empty %}
         <p class="empty">작성된 일기가 없어요 :(</p>
         {% endfor %} 
+      
 </div>
-
-  {% if is_paginated %}
-  <ul class="pagination">
+    {% if is_paginated %}
+    <ul class="pagination">
     {% if page_obj.has_previous %}
-      <li class="page-item"><a class="page-link" href="?page=1">처음</a></li>
-      <li  class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">이전</a></li>
+        <li class="page-item"><a class="page-link" href="?page=1">처음</a></li>
+        <li  class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">이전</a></li>
     {% endif %}
 
     {% for num in page_obj.paginator.page_range %}
-      {% if page_obj.number == num %}
+        {% if page_obj.number == num %}
         <li class="page-item">{{ num }}</li>
-      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
         <li><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-      {% endif %}
+        {% endif %}
     {% endfor %}
 
     {% if page_obj.has_next %}
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">다음</a></li>
-      <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">마지막</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">다음</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">마지막</a></li>
     {% endif %}
-  </ul>
-  {% endif %}
-  </div>
+</ul>
+{% endif %}
+</div>
 
 <script>
   window.setTimeout(function() {
