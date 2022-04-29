@@ -4,11 +4,8 @@ from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from numpy import rec
-<<<<<<< HEAD
 from sympy import Id
-=======
 from braces.views import LoginRequiredMixin
->>>>>>> e8a351216b611a0ed8020d20db6f5722dfbe8303
 
 from diary.models import Diary
 from diary.models import Music
