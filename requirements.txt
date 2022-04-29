@@ -17,3 +17,4 @@ gensim
 rhinoMorph
 jpype1
 sklearn
+django-braces
