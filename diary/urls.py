@@ -2,12 +2,17 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # 메인화면
+    # 전체 일기
     path('', views.MainView.as_view(), name='main'),
+    # 내 일기
+    path('me/', views.MyDiaryView.as_view(), name='my-diary'),
     
     #일기 내용
+    # path('detail/<int:diary_id>/', 
+    #     views.DiaryDetailView.as_view(), 
+    #     name='diary-detail'),
     path('detail/<int:diary_id>/', 
-        views.DiaryDetailView.as_view(), 
+        views.diaryDetailView, 
         name='diary-detail'),
     
     #일기작성

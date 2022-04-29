@@ -11,6 +11,7 @@ media
 # 각 모델
 diary/ml_models/real_model.pt
 diary/ml_models/glove-twitter-100/glove-twitter-100.gz
+diary/ml_models/glove-twitter-100.vectors.npy
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

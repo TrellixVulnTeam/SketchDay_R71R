@@ -17,7 +17,7 @@
   --button-secondary-hover: #e0e0e0;
   --button-purple: #06e3f3;
   --button-purple-background: #e4d4fa;
-  --button-darkpurple-background: #47aece;
+  --button-darkpurple-background: #263438;
   --button-darkgray-background: #c6c6cc;
 
   --input-background: #f3f3f3;
@@ -38,9 +38,9 @@
   --box-border: #e3e1dc;
   --box-gray-background: #f3f3f3;
 
-  --noti-background: #f4f3f6;
-  --noti-purple: #1a8dda;
-  --noti-purple-background: #f5f0fc;
+  --noti-background: #ffffff;
+  --noti-purple: #0e1113;
+  --noti-purple-background: #ffffff;
 
   --links-divider: #979797;
 

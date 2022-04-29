@@ -65,13 +65,13 @@ def get_vector(data):
     try:
         return vec/cnt
     except:
-        pass
+        return np.array([0]*100)
 
-def get_recommendation(text):
-    vec = get_vector(text)
+def get_recommendation(vec):
     print(vec)
     cand = diary.apps.DiaryConfig.rec_model.kneighbors(vec.reshape(1, -1))[1][0]
     print(cand)
     for i in cand:
         print(diary.apps.DiaryConfig.song_df.loc[i]['title'],diary.apps.DiaryConfig.song_df.loc[i]['artist'])
         print(diary.apps.DiaryConfig.song_df.loc[i]['lyric'])
+    return cand[0]
