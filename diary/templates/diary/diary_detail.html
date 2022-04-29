@@ -31,7 +31,7 @@
     </p>  
     <p>{{ diary.emotion_val }}</p>
     </article>
-    <p>{{ diary.emotion }}</p>
+    <h2>감정 상태</h2>
     <div style="display: flex; justify-content: center">
       <div class="chart-container" style="height: 500px; width:500px">
         <p style="text-align: center; font-size: 1.5rem">오늘은 {{ diary.emotion }} 하셨군요!</p>
@@ -40,9 +40,7 @@
         </div>
       </div>
     </div>
-    
-    <p>{{ diary.vector }}</p>
-    <p>{{ diary.music_no }}</p>
+
 </div>
 <script>
 var emotion_pie = document.getElementById('myChart').getContext('2d');

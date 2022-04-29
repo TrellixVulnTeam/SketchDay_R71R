@@ -3,6 +3,15 @@
 {% load static %}
 
 {% block content %}
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible alert-warning">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <h4 class="alert-heading">{{ message.tag }}</h4>
+              <p class="mb-0">{{ message.tag }}{{ message }}</p>
+      </div>
+  {% endfor %}
+{% endif %}
 <div class="post-list">
   <div class="header">
     <h2>감정 일기</h2>
@@ -28,4 +37,12 @@
     {% endfor %} 
 </div>
 </div>
+
+<script>
+  window.setTimeout(function() {
+    $(".alert-dismissible").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 2000);
+</script>
 {% endblock content %}

@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from numpy import rec
 
 from diary.models import Diary
+from Login.models import User
 from diary.forms import DiaryCreateForm
 
 from .ml_models import emotional_analysis
@@ -62,7 +64,6 @@ def diaryDetailView(request, diary_id):
 #     def form_valid(self, form):
 #         form.instance.author = self.request.user
 #         return super().form_valid(form)
-    
 #     def get_success_url(self):
 #         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
 
@@ -71,6 +72,7 @@ def diaryDetailView(request, diary_id):
 def diaryCreateView(request):
     if request.method == 'POST':
         form = DiaryCreateForm(request.POST)
+        current_id = User.objects.get(id=request.user.id)
         if form.is_valid():
             # post = form.save(commit=True)
             post = form.save(commit=False)
@@ -83,9 +85,17 @@ def diaryCreateView(request):
             # print(emotion_val[0])
             # print(type(emotion_val[0]))
             post.emotion_value = json.dumps(emotion_val[0])
-            post.save()
-            # messages.success(request, '포스팅을 저장했습니다.')
-            return redirect('main')
+            try:
+                today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
+            except ObjectDoesNotExist:
+                today = 1
+            if today == 1:
+                post.save()
+                messages.success(request, '일기를 저장했습니다.')
+                return redirect('main')
+            else:
+                messages.warning(request, '작성한 일기가 있습니다.')
+                return redirect('main')
     else:
         form = DiaryCreateForm()
 
