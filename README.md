@@ -6,7 +6,7 @@
 
 [2. 배경 및 목적](#2-배경-및-목적)
 
-[3. 배경 및 목적](#2-배경-및-목적)
+[3. Service Flow](#3-service-flow)
 
 [4. Architecture - 3 - Tier](#4-architecture---3---tier)
 
