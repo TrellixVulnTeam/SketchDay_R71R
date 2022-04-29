@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 from Login.views import CustomPasswordChangeView
+from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -31,7 +32,12 @@ urlpatterns = [
     #Diary
     path('diary/', include('diary.urls')),
     
-    
+    # 이메일 변경
+    path(
+        'email-confirmation-done/',
+        TemplateView.as_view(template_name='account/email_confirmation_done.html'),
+        name='account_email_confirmation_done',
+    ),
     # 비밀번호 변경
     path(
         'password/change/',

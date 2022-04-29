@@ -588,8 +588,8 @@ body.with-background {
 .login .logo,
 .signup .logo {
   display: block;
-  width: 164px;
-  height: 90px;
+  width: 200px;
+  height: 150px;
   margin: 0 auto 47px;
 }
 
