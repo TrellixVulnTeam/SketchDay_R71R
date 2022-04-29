@@ -4,8 +4,10 @@ from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from numpy import rec
+from sympy import Id
 
 from diary.models import Diary
+from diary.models import Music
 from Login.models import User
 from diary.forms import DiaryCreateForm
 
@@ -43,13 +45,15 @@ class MainView(ListView):
 @login_required
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
+    db_music = get_object_or_404(Music, pk=qs.music_no)
     jsonDec = json.decoder.JSONDecoder()
-    
+
     try:
         qs.emotion_value = jsonDec.decode(qs.emotion_value)
     except:
         pass
-    context = {'diary': qs}
+    context = {'diary': qs,
+               'music': db_music}
 
     return render(request, 'diary/diary_detail.html',context)
 

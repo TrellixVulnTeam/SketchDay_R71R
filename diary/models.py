@@ -1,3 +1,4 @@
+from operator import mod
 from xmlrpc.client import Boolean
 from django.db import models
 from Login.models import User
@@ -33,4 +34,10 @@ class Diary(models.Model):
     def __str__(self):
         return self.title
 
-
+class Music(models.Model):
+    title = models.CharField(max_length=255)
+    artist = models.CharField(max_length=255)
+    lyric = models.TextField()
+    genre = models.CharField(max_length=64)
+    release_date = models.CharField(max_length=32)
+    vector = models.CharField(max_length=65535)
