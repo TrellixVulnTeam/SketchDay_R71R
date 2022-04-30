@@ -56,11 +56,7 @@ class MyDiaryView(LoginRequiredMixin, ListView):
 @login_required
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
-<<<<<<< HEAD
     db_music = get_object_or_404(Music, pk=qs.music_no)
-=======
-    
->>>>>>> e8a351216b611a0ed8020d20db6f5722dfbe8303
     jsonDec = json.decoder.JSONDecoder()
 
     try:
