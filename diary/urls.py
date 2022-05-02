@@ -19,6 +19,10 @@ urlpatterns = [
     # path('new/', 
     #     views.DiaryCreateView.as_view(), 
     #     name='diary-create'),
+    path('new/<str:dt_selected>', 
+        views.diaryCreateView, 
+        name='diary-create_selected'),
+
     path('new/', 
         views.diaryCreateView, 
         name='diary-create'),
