@@ -56,11 +56,9 @@ class MyDiaryView(LoginRequiredMixin, ListView):
 @login_required
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
-<<<<<<< HEAD
     db_music = get_object_or_404(Music, pk=qs.music_no)
-=======
-    
->>>>>>> e8a351216b611a0ed8020d20db6f5722dfbe8303
+    current_id = User.objects.get(email=qs.author).id
+    db_rec_diary = get_object_or_404(Diary, pk=recommendation_ml.get_recommendation_diary(qs.vector, current_id))
     jsonDec = json.decoder.JSONDecoder()
 
     try:
@@ -68,7 +66,8 @@ def diaryDetailView(request, diary_id):
     except:
         pass
     context = {'diary': qs,
-               'music': db_music}
+               'music': db_music,
+               'rec_diary': db_rec_diary}
 
     return render(request, 'diary/diary_detail.html', context)
 
