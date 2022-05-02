@@ -5,8 +5,11 @@ from django.urls import reverse
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from numpy import rec
+from sympy import Id
+from braces.views import LoginRequiredMixin
 
 from diary.models import Diary
+from diary.models import Music
 from Login.models import User
 from diary.forms import DiaryCreateForm
 
@@ -27,14 +30,24 @@ import json
 
 # Create your views here.
 
-# main 화면 일단은 일기 리스트 보여줌
+# 전체 일기 리스트
 class MainView(ListView):
     model = Diary
     template_name = 'diary/diary.html'
     context_object_name = 'diarys'
-    # paginate_by = 8
-    ordering = ['-dt_created']
+    paginate_by = 8
+    def get_queryset(self):
+        return Diary.objects.filter(public_TF=True).order_by('-dt_created')
 
+class MyDiaryView(LoginRequiredMixin, ListView):
+    model = Diary
+    template_name = 'diary/diary_me.html'
+    context_object_name = 'diarys'
+    paginate_by = 8
+    
+    def get_queryset(self):
+        return Diary.objects.filter(public_TF=(False), author=self.request.user).order_by('-dt_created')
+    
 # 일기 세부 내용
 # class DiaryDetailView(DetailView):
 #     model = Diary
@@ -50,15 +63,18 @@ class MainView(ListView):
 @login_required
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
-    jsonDec = json.decoder.JSONDecoder()
+    db_music = get_object_or_404(Music, pk=qs.music_no)
     
+    jsonDec = json.decoder.JSONDecoder()
+
     try:
         qs.emotion_value = jsonDec.decode(qs.emotion_value)
     except:
         pass
-    context = {'diary': qs}
+    context = {'diary': qs,
+               'music': db_music}
 
-    return render(request, 'diary/diary_detail.html',context)
+    return render(request, 'diary/diary_detail.html', context)
 
 # 일기 작성
 # class DiaryCreateView(CreateView):
