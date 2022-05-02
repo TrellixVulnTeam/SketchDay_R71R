@@ -31,12 +31,6 @@
           <div class="error-message">{{error}}</div>
         {% endfor %}
       </div>
-      <div class="nickname">
-        {{form.nickname|add_class:"form-control"|attr:"placeholder=닉네임"|add_error_class:"error"}}
-        {% for error in form.nickname.errors  %}
-          <div class="error-message">{{error}}</div>
-        {% endfor %}
-      </div>
       <button class="btn btn-primary" type="submit">회원가입</button>
     </form>
 

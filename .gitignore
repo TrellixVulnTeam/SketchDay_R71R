@@ -12,6 +12,8 @@ media
 diary/ml_models/real_model.pt
 diary/ml_models/glove-twitter-100/glove-twitter-100.gz
 diary/ml_models/glove-twitter-100.vectors.npy
+task/ml/models/vqgan_imagenet_f16_16384.ckpt
+task/ml/models/vqgan_imagenet_f16_16384.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

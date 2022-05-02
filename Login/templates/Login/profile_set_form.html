@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}환영합니다! | SketchDay{% endblock title %}
+
+
+{% block content %}
+<div class="profile-form">
+  <h1 class="heading">환영합니다!<br><strong>프로필</strong>을 작성해주세요</h1>
+  <form class="form" method="post" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="profile-pic">
+      <div class="thumb" style="background-image: url('{{ user.profile_pic.url }}')"></div>
+      <div class="file">
+        {{ form.profile_pic }}
+      </div>
+    </div>
+    <div class="nickname">
+      {{ form.nickname|add_class:"form-control"|add_error_class:"error"|attr:"placeholder:닉네임" }}
+      {% for error in form.nickname.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+    <button class="btn btn-primary" type="submit">완료</button>
+  </form>
+</div>
+{% endblock content %}

@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .validators import validate_no_special_characters, validate_restaurant_link
@@ -13,7 +14,9 @@ class User(AbstractUser):
         error_messages={'unique' : "이미 사용중인 닉네임 입니다."}
         )
     
+    profile_pic = models.ImageField(default = "default_profile_pic.jpg", upload_to='profile_pics') 
+    
     # 기본값을 username 에서 email로 변환
     def __str__(self):
         return self.email
-    
+

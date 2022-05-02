@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
@@ -19,7 +20,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from diary import apps
 
+from .ml_models.make_text2art import make_prompts
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
+
 import json
+import datetime
 
 # Create your views here.
 
@@ -32,14 +40,22 @@ class MainView(ListView):
     def get_queryset(self):
         return Diary.objects.filter(public_TF=True).order_by('-dt_created')
 
-class MyDiaryView(LoginRequiredMixin, ListView):
+# 내 일기 전체
+class UserDiaryListView(ListView):
     model = Diary
-    template_name = 'diary/diary_me.html'
-    context_object_name = 'diarys'
+    template_name = 'diary/user_diary_list.html'
+    context_object_name = 'user_diarys'
     paginate_by = 8
     
     def get_queryset(self):
-        return Diary.objects.filter(public_TF=(False), author=self.request.user).order_by('-dt_created')
+        user_id = self.kwargs.get("user_id")
+        return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile_user'] = get_object_or_404(User, id=self.kwargs.get("user_id"))
+        return context
+        
     
 # 일기 세부 내용
 # class DiaryDetailView(DetailView):
@@ -87,7 +103,7 @@ def diaryDetailView(request, diary_id):
 
 # 일기 작성 - 감정분석 수행되도록 수정
 @login_required
-def diaryCreateView(request):
+def diaryCreateView(request, dt_selected=None):
     if request.method == 'POST':
         form = DiaryCreateForm(request.POST)
         current_id = User.objects.get(id=request.user.id)
@@ -103,19 +119,32 @@ def diaryCreateView(request):
             # print(emotion_val[0])
             # print(type(emotion_val[0]))
             post.emotion_value = json.dumps(emotion_val[0])
+
+            # prompt text 생성
+            text = make_prompts(post.content, emotion_val[1])
+            # background task에 전달
+            nick = User.objects.get(email=request.user).nickname
+
             try:
                 today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
             except ObjectDoesNotExist:
                 today = 1
             if today == 1:
                 post.save()
-                messages.success(request, f'일기를 저장했습니다.')
+                async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
+
+                messages.success(request, '일기를 저장했습니다.')
                 return redirect('main')
             else:
                 messages.warning(request, '작성한 일기가 있습니다.')
                 return redirect('main')
     else:
-        form = DiaryCreateForm()
+        if dt_selected:
+            year, month, day = map(int, dt_selected.split('-'))
+            init_date = datetime.date(year, month, day)
+            form = DiaryCreateForm(initial={'dt_created' : init_date})
+        else:
+            form = DiaryCreateForm()
 
     return render(request, 'diary/diary_form.html',{
         'form': form,
@@ -139,3 +168,4 @@ class DiaryDeleteView(DeleteView):
     
     def get_success_url(self):
         return reverse('main')
+    
