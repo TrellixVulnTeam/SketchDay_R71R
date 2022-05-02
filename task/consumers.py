@@ -1,8 +1,12 @@
+from io import BytesIO
 from tqdm import tqdm
 from task.ml.clipit import clipit
 from task.ml.text2art import Text2Art
 from channels.consumer import SyncConsumer
 from diary.models import Diary
+
+from django.core.files.base import ContentFile
+
 from PIL import Image
 
 class BackgroundTaskConsumer(SyncConsumer) :
@@ -26,7 +30,13 @@ class BackgroundTaskConsumer(SyncConsumer) :
         except KeyboardInterrupt:
             pass
         # model에 데이터 저장
-        create_image = Image.open(output)
-        diary = Diary.objects.get(id=message['diaryID'])
-        diary.image = create_image
+        diary = Diary.objects.get(pk=message['diaryID'])
+        im = Image.open(output)
+        image_io = BytesIO()
+        im.save(image_io, format='PNG')
+
+        image_name = message['userId'] + str(message['diaryID']) + '.png'
+        diary.image.save(image_name, ContentFile(image_io.getvalue()))
+        diary.save()
+        
         print('end')

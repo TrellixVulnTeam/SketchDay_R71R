@@ -11,7 +11,7 @@ class Text2Art() :
         quality = 'normal'
         aspect = 'widescreen'
 
-        clipit.add_settings(prompts=prompts, output=output, quality=quality, aspect=aspect, iterations=5, save_every=1)
+        clipit.add_settings(prompts=prompts, output=output, quality=quality, aspect=aspect, iterations=1, save_every=1)
         settings = clipit.apply_settings()
         clipit.do_init(settings)
 
