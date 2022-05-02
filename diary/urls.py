@@ -4,8 +4,11 @@ from . import views
 urlpatterns = [
     # 전체 일기
     path('', views.MainView.as_view(), name='main'),
-    # 내 일기
-    path('me/', views.MyDiaryView.as_view(), name='my-diary'),
+    
+    #내 일기 전체보기
+    path('users/<int:user_id>/diarys/', 
+        views.UserDiaryListView.as_view(), 
+        name='user-review-list'),
     
     #일기 내용
     # path('detail/<int:diary_id>/', 
@@ -32,4 +35,6 @@ urlpatterns = [
     path('<int:diary_id>/delete/', 
         views.DiaryDeleteView.as_view(), 
         name='diary-delete'),
+    
+
 ]
