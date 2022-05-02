@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
@@ -18,6 +19,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from diary import apps
+
+from .ml_models.make_text2art import make_prompts
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
+channel_layer = get_channel_layer()
 
 import json
 import datetime
@@ -58,6 +65,7 @@ class MyDiaryView(LoginRequiredMixin, ListView):
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
     db_music = get_object_or_404(Music, pk=qs.music_no)
+    
     jsonDec = json.decoder.JSONDecoder()
 
     try:
@@ -101,13 +109,21 @@ def diaryCreateView(request, dt_selected=None):
             # print(emotion_val[0])
             # print(type(emotion_val[0]))
             post.emotion_value = json.dumps(emotion_val[0])
+
+            # prompt text 생성
+            text = make_prompts(post.content, emotion_val[1])
+            # background task에 전달
+            nick = User.objects.get(email=request.user).nickname
+
             try:
                 today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
             except ObjectDoesNotExist:
                 today = 1
             if today == 1:
                 post.save()
-                messages.success(request, f'일기를 저장했습니다.')
+                async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
+
+                messages.success(request, '일기를 저장했습니다.')
                 return redirect('main')
             else:
                 messages.warning(request, '작성한 일기가 있습니다.')
