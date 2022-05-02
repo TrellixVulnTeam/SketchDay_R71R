@@ -20,6 +20,7 @@ from django.contrib import messages
 from diary import apps
 
 import json
+import datetime
 
 # Create your views here.
 
@@ -84,7 +85,7 @@ def diaryDetailView(request, diary_id):
 
 # 일기 작성 - 감정분석 수행되도록 수정
 @login_required
-def diaryCreateView(request):
+def diaryCreateView(request, dt_selected=None):
     if request.method == 'POST':
         form = DiaryCreateForm(request.POST)
         current_id = User.objects.get(id=request.user.id)
@@ -112,7 +113,12 @@ def diaryCreateView(request):
                 messages.warning(request, '작성한 일기가 있습니다.')
                 return redirect('main')
     else:
-        form = DiaryCreateForm()
+        if dt_selected:
+            year, month, day = map(int, dt_selected.split('-'))
+            init_date = datetime.date(year, month, day)
+            form = DiaryCreateForm(initial={'dt_created' : init_date})
+        else:
+            form = DiaryCreateForm()
 
     return render(request, 'diary/diary_form.html',{
         'form': form,
