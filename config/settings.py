@@ -66,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 미들웨어 추가
+    'Login.middleware.ProfileSetupMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -154,14 +156,13 @@ AUTHENTICATION_BACKENDS = [
 
 
 # url 설정
-ACCOUNT_SIGNUP_REDIRECT_URL="main" # 회원가입을 하면 index로 이동
+ACCOUNT_SIGNUP_REDIRECT_URL= "profile-set" # 회원가입을 하면 profile-set 이동
 LOGIN_REDIRECT_URL="main" # 로그인을 하면 index로 이동
 LOGIN_URL = 'account_login' # 로그인이 안 된다면 로그인 페이지로 이동
 ACCOUNT_LOGOUT_ON_GET=True # 바로 로그아웃 (기본 값은 False)
 ACCOUNT_AUTHENTICATION_METHOD="email"  # email로 유저 로그인
 ACCOUNT_EMAIL_REQUIRED = True  #회원가입시 email 필수
 ACCOUNT_USERNAME_REQUIRED = False #회원가입시 username 선택
-ACCOUNT_SIGNUP_FORM_CLASS = "Login.forms.SignupForm" # 재정의한 회원가입 폼 사용
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
 ACCOUNT_EMAIL_VARIFICATION ="optional" # 인증 하지 않아도 로그인 가능
 ACCOUNT_SESSION_REMEMBER= True # 유저 기억

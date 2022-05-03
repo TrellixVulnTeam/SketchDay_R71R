@@ -1,10 +1,11 @@
 from django.test import TestCase
-from .ml_models import emotional_analysis
+import sqlite3, pandas as pd
 # Create your tests here.
 class MLTests(TestCase):
-    def test_ea_algorithm(self):
-        input_data = {
-            "data" : "매우 기쁜날입니다",
-        }
-        test_gnadi = emotional_analysis.EmotionAnalysis()
-        response = test_gnadi.predict(input_data)
+    print('load sql')
+    sql = sqlite3.connect("db.sqlite3")
+    print('load df')
+    a = 6
+    df = pd.read_sql("SELECT vector,author_id FROM diary_diary", sql, index_col=None)
+    df = df.loc[df['author_id'] != a]
+    print(df.tail())

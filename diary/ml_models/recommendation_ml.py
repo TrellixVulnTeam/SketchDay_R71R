@@ -9,6 +9,7 @@ import rhinoMorph
 from collections import Counter
 from sklearn.neighbors import NearestNeighbors
 import diary.apps
+import sqlite3
 
 
 rn = rhinoMorph.startRhino()
@@ -75,3 +76,27 @@ def get_recommendation(vec):
         print(diary.apps.DiaryConfig.song_df.loc[i]['title'],diary.apps.DiaryConfig.song_df.loc[i]['artist'])
         print(diary.apps.DiaryConfig.song_df.loc[i]['lyric'])
     return cand[0]
+
+def get_recommendation_diary(vec,cur_id):
+    print('diary vec:', cur_id, vec,'\n')
+    sql = sqlite3.connect("db.sqlite3")
+    df = pd.read_sql("SELECT id,vector,author_id FROM diary_diary", sql, index_col=None)
+    # 자신의 일기 제외
+    df = df.loc[df['author_id'] != cur_id].reset_index()
+    print(df.head())
+
+    # 일기 벡터들 array로 변환
+    x_train = []
+    for i in range(len(df)):
+        x_train.append(df.loc[i]['vector'][1:-1].split())
+    x_train = pd.DataFrame(x_train)
+    model = NearestNeighbors(n_neighbors=1, metric='cosine')
+    model.fit(x_train)
+    print(model.kneighbors(str_to_list(vec).reshape(1, -1))[1][0][0])
+    print(df.loc[model.kneighbors(str_to_list(vec).reshape(1, -1))[1][0][0]])
+    print(df.loc[model.kneighbors(str_to_list(vec).reshape(1, -1))[1][0][0]]['id'])
+
+    return int(df.loc[model.kneighbors(str_to_list(vec).reshape(1, -1))[1][0][0]]['id'])
+
+def str_to_list(s):
+    return np.array(list(map(float,s[1:-1].split())))

@@ -12,6 +12,7 @@ import requests
 
 # 불용어 처리
 nltk.download('wordnet')
+nltk.download('omw-1.4')
 stop_words = set(stopwords.words('english'))
 stop_words.update(['well', 'first', 'think'])
 
