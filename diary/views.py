@@ -27,6 +27,7 @@ from channels.layers import get_channel_layer
 channel_layer = get_channel_layer()
 
 import json
+import datetime
 
 # Create your views here.
 
@@ -39,14 +40,22 @@ class MainView(ListView):
     def get_queryset(self):
         return Diary.objects.filter(public_TF=True).order_by('-dt_created')
 
-class MyDiaryView(LoginRequiredMixin, ListView):
+# 내 일기 전체
+class UserDiaryListView(ListView):
     model = Diary
-    template_name = 'diary/diary_me.html'
-    context_object_name = 'diarys'
+    template_name = 'diary/user_diary_list.html'
+    context_object_name = 'user_diarys'
     paginate_by = 8
     
     def get_queryset(self):
-        return Diary.objects.filter(public_TF=(False), author=self.request.user).order_by('-dt_created')
+        user_id = self.kwargs.get("user_id")
+        return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile_user'] = get_object_or_404(User, id=self.kwargs.get("user_id"))
+        return context
+        
     
 # 일기 세부 내용
 # class DiaryDetailView(DetailView):
@@ -64,7 +73,8 @@ class MyDiaryView(LoginRequiredMixin, ListView):
 def diaryDetailView(request, diary_id):
     qs = get_object_or_404(Diary, pk=diary_id)
     db_music = get_object_or_404(Music, pk=qs.music_no)
-    
+    current_id = User.objects.get(email=qs.author).id
+    db_rec_diary = get_object_or_404(Diary, pk=recommendation_ml.get_recommendation_diary(qs.vector, current_id))
     jsonDec = json.decoder.JSONDecoder()
 
     try:
@@ -72,7 +82,8 @@ def diaryDetailView(request, diary_id):
     except:
         pass
     context = {'diary': qs,
-               'music': db_music}
+               'music': db_music,
+               'rec_diary': db_rec_diary}
 
     return render(request, 'diary/diary_detail.html', context)
 
@@ -92,7 +103,7 @@ def diaryDetailView(request, diary_id):
 
 # 일기 작성 - 감정분석 수행되도록 수정
 @login_required
-def diaryCreateView(request):
+def diaryCreateView(request, dt_selected=None):
     if request.method == 'POST':
         form = DiaryCreateForm(request.POST)
         current_id = User.objects.get(id=request.user.id)
@@ -128,7 +139,12 @@ def diaryCreateView(request):
                 messages.warning(request, '작성한 일기가 있습니다.')
                 return redirect('main')
     else:
-        form = DiaryCreateForm()
+        if dt_selected:
+            year, month, day = map(int, dt_selected.split('-'))
+            init_date = datetime.date(year, month, day)
+            form = DiaryCreateForm(initial={'dt_created' : init_date})
+        else:
+            form = DiaryCreateForm()
 
     return render(request, 'diary/diary_form.html',{
         'form': form,
@@ -152,3 +168,4 @@ class DiaryDeleteView(DeleteView):
     
     def get_success_url(self):
         return reverse('main')
+    

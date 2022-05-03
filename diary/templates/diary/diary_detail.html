@@ -62,8 +62,15 @@
             <span class="date">{{ diary.dt_created|date:"Y.m.d" }}</span>
             
       </div>
-      <div class="nickname">작성자 : {{ diary.author.nickname }}</div>
+        
+      <a class="profile-link" href="{% url 'profile' diary.author.id %}">
+      <div class="podo-box gray-background profile">
+      <div class="profile-pic" style="background-image: url('{{ diary.author.profile_pic.url }}')"></div>
+      <div class="profile-info">
+      <div class="nickname">{{ diary.author.nickname }}</div>
+     </div>
     </div>
+  </a>
     <p class="item-detail">
       {{ diary.content |linebreaksbr }}
     </p>  
@@ -80,6 +87,8 @@
     </div>
     <p>{{ music.title }}</p>
     <p>{{ music.lyric }}</p>
+    <p>{{ rec_diary.title }}</p>
+    <p>{{ rec_diary.content }}</p>
 
 </div>
 <script>

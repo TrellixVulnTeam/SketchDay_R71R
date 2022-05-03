@@ -15,15 +15,12 @@
   
       <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto">
+          <li class="nav-item">
           {% if user.is_authenticated %}
-          <li class="nav-item">
+            <li><a class="nav-link" href="{% url 'profile' user.id %}">내 프로필</a></li>
             <li><a class="nav-link" href="{% url 'account_logout' %}">로그아웃</a></li>
-          </li>
           {% else %}
-          <li class="nav-item">
-            <li><a class="nav-link" href="{% url 'account_login' %}">로그인</a></li>
-          </li>
-          <li class="nav-item">
+            <li><a class="nav-link" href="{% url 'account_login' %}">로그인</a></li> 
             <li><a class="nav-link" href="{% url 'account_signup' %}">회원가입</a></li>
           </li>
           {% endif %}
@@ -32,7 +29,6 @@
     </div>
   </nav>
 </header>
-
 
 {% endblock header %}
 

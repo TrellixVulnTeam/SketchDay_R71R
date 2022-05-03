@@ -6,26 +6,37 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 import calendar
 
-from .models import *
+# from .models import *
 from .utils import Calendar
-from .forms import EventForm
+# from .forms import EventForm
+from diary.models import *
 
-def index(request):
-    return HttpResponse('hello')
 
 class CalendarView(generic.ListView):
-    model = Event
+    model = Diary
     template_name = 'emotion_calendar/calendar.html'
+    context_object_name = 'diarys'
 
     def get_context_data(self, **kwargs):
+        # diarys = Diary()
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
+        user_id = self.kwargs.get('user_id')
+        # diarys = context.filter(dt_created__month=d)
+        context['obj_new'] = Diary.objects.all()
+        print(context['obj_new'])
         cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(self.request.user, withyear=True)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
+    
+    # def get_queryset(self):
+    #     d = get_date(self.request.GET.get('month', None))
+    #     diarys = super().get_queryset().filter(dt_created__month=d)
+    #     print(diarys)
+    #     return diarys
 
 def get_date(req_month):
     if req_month:
@@ -46,15 +57,3 @@ def next_month(d):
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
 
-def event(request, event_id=None):
-    instance = Event()
-    if event_id:
-        instance = get_object_or_404(Event, pk=event_id)
-    else:
-        instance = Event()
-
-    form = EventForm(request.POST or None, instance=instance)
-    if request.POST and form.is_valid():
-        form.save()
-        return HttpResponseRedirect(reverse('cal:calendar'))
-    return render(request, 'emotion_calendar/event.html', {'form': form})
