@@ -13,11 +13,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ratingModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="ratingModalLabel">추천 노래 평가하기</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>추천 노래 평가하기 </p>
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id="first">
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
         </svg>
@@ -33,11 +32,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id=fifth>
           <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
         </svg>
-        <span id='score'>0</span>
+        <span id='score'></span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="save_rating">Save changes</button>
       </div>
     </div>
   </div>
@@ -50,12 +49,16 @@
       <div class="buttons">
         <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>
         <a class="btn btn-primary btn-sm" href="{% url 'diary-update' diary.id%}">수정</a>
-        <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">평가</a>
+        {%if not diary.rate%}
+          <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">평가</a>
+        {%endif%}
       </div>
       {% endif %}
     </div>
     <article>
-      <img class="image" src="{{ diary.image.url }}">
+      {% if diary.image %}
+        <img class="image" src="{{ diary.image.url }}">
+      {% endif %}
       <div class="post-meta">
           <div class="item-info">  
             <div  class="title">{{ diary.title }} </div>
@@ -118,7 +121,6 @@ const three = document.getElementById('third')
 const four = document.getElementById('fourth')
 const five = document.getElementById('fifth')
 const num = document.getElementById('score')
-//console.log(one)
 
 const handleSelect = (selection) => {
   switch(selection) {
@@ -174,8 +176,37 @@ const arr = [one, two, three, four, five]
 
 arr.forEach(item=> item.addEventListener('mouseover', (event)=> {
   handleSelect(event.target.id)
-  //console.log(event.target)
 }))
+
+// save rating score with ajax
+const btnAjax = document.getElementById("save_rating")
+const diary_id = {{ diary.id }}
+const music_id = {{ music.id }}
+
+btnAjax.addEventListener('click', e => {
+  console.log(num.innerText)
+  const param = {
+    'diary_id' : diary_id,
+    'music_id' : music_id,
+    'score' : num.innerText,
+  }
+
+  $.ajaxSetup({
+    headers : {'X-CSRFToken':'{{csrf_token}}'}
+  })
+
+  $.ajax({
+    url : 'http://127.0.0.1:8000/diary/rating/',
+    type : 'POST',
+    data : JSON.stringify(param),
+    success:function(data) {
+      console.log('success')
+    },
+    error : function(data) {
+      console.log('fail')
+    }
+  })
+})
 
 </script>
 

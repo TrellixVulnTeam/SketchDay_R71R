@@ -26,6 +26,7 @@ class Diary(models.Model):
     vector = models.CharField(max_length=65535)
     music_no = models.IntegerField()
     emotion_value = models.TextField()
+    rate = models.BooleanField(default=False)
 
     # User 모델 접근
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -41,3 +42,5 @@ class Music(models.Model):
     genre = models.CharField(max_length=64)
     release_date = models.CharField(max_length=32)
     vector = models.CharField(max_length=65535)
+    rate = models.FloatField(default=0)
+    rate_cnt = models.IntegerField(default=0)

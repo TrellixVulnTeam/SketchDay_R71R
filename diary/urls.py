@@ -40,5 +40,6 @@ urlpatterns = [
         views.DiaryDeleteView.as_view(), 
         name='diary-delete'),
     
-
+    # 노래 평가
+    path('rating/', views.rating, name='music-rating'),
 ]
