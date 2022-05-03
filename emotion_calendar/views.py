@@ -25,14 +25,16 @@ class CalendarView(generic.ListView):
         for i in range(len(diarys)):
             this_month_diary += diarys[i].content
             this_month_diary += ' '
-
-        wc = WordCloud(font_path='static/YdestreetB.ttf', width=400, height=400, scale=2.0, max_font_size=250)
-        gen = wc.generate(this_month_diary)
-        f_name = str(self.request.user).split('.')[0]
-        full_name = 'static/'+ f_name +'.png'
-        gen.to_file(full_name)
-        down_name = '/../static/'+ f_name +'.png'
-        context['img_path'] = down_name
+        if this_month_diary != "":
+            wc = WordCloud(font_path='static/YdestreetB.ttf', width=400, height=400, scale=2.0, max_font_size=250)
+            gen = wc.generate(this_month_diary)
+            f_name = str(self.request.user).split('.')[0]
+            full_name = 'static/'+ f_name +'.png'
+            gen.to_file(full_name)
+            down_name = '/../static/'+ f_name +'.png'
+            context['img_path'] = down_name
+        else:
+            context['img_path'] = ''
 
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)
