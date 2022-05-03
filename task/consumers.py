@@ -29,6 +29,7 @@ class BackgroundTaskConsumer(SyncConsumer) :
                         print('error: ', e)
         except KeyboardInterrupt:
             pass
+
         # model에 데이터 저장
         diary = Diary.objects.get(pk=message['diaryID'])
         im = Image.open(output)
