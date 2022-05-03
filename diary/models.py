@@ -35,9 +35,11 @@ class Diary(models.Model):
         return self.title
 
 class Music(models.Model):
-    title = models.CharField(max_length=255)
-    artist = models.CharField(max_length=255)
+    title = models.CharField(max_length=256)
+    artist = models.CharField(max_length=256)
     lyric = models.TextField()
     genre = models.CharField(max_length=64)
     release_date = models.CharField(max_length=32)
-    vector = models.CharField(max_length=65535)
+    vector = models.TextField()
+    sentiment = models.CharField(max_length=32)
+    url = models.CharField(max_length=256)
