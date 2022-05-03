@@ -1,14 +1,8 @@
 from datetime import datetime, timedelta, date
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 import calendar
-
-# from .models import *
 from .utils import Calendar
-# from .forms import EventForm
 from diary.models import *
 
 
@@ -18,7 +12,7 @@ class CalendarView(generic.ListView):
     context_object_name = 'diarys'
 
     def get_context_data(self, **kwargs):
-        diarys = Diary()
+        # diarys = Diary()
 
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
