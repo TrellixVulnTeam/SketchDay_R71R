@@ -1,7 +1,5 @@
 from calendar import HTMLCalendar
-from datetime import datetime, timedelta
 from diary.models import Diary
-import datetime
 
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None):
@@ -31,7 +29,7 @@ class Calendar(HTMLCalendar):
 			onclick_url = f'"/diary/new/{dt_selected}"'
 
 		if day != 0:
-			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url} {dt_selected}</ul></td>'''
+			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
 		return '<td></td>'
 
 
@@ -50,5 +48,6 @@ class Calendar(HTMLCalendar):
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
 			cal += f'{self.formatweek(week, diarys)}\n'
+		cal += '</table>'
 
 		return cal

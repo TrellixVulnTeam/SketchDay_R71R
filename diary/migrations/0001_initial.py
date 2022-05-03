@@ -17,21 +17,32 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Music',
             fields=[
+<<<<<<< HEAD
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+=======
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+>>>>>>> donghyun
                 ('title', models.CharField(max_length=255)),
                 ('artist', models.CharField(max_length=255)),
                 ('lyric', models.TextField()),
                 ('genre', models.CharField(max_length=64)),
                 ('release_date', models.CharField(max_length=32)),
                 ('vector', models.CharField(max_length=65535)),
+<<<<<<< HEAD
                 ('rate', models.FloatField()),
                 ('rate_cnt', models.IntegerField()),
+=======
+>>>>>>> donghyun
             ],
         ),
         migrations.CreateModel(
             name='Diary',
             fields=[
+<<<<<<< HEAD
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+=======
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+>>>>>>> donghyun
                 ('title', models.CharField(max_length=60)),
                 ('content', models.TextField()),
                 ('dt_created', models.DateField()),
@@ -42,7 +53,10 @@ class Migration(migrations.Migration):
                 ('vector', models.CharField(max_length=65535)),
                 ('music_no', models.IntegerField()),
                 ('emotion_value', models.TextField()),
+<<<<<<< HEAD
                 ('rate', models.BooleanField(default=False)),
+=======
+>>>>>>> donghyun
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
