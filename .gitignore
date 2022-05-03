@@ -8,6 +8,8 @@ db.sqlite3
 db.sqlite3-journal
 media
 static/*.png
+static/diary_img/
+*/migrations
 
 # 각 모델
 diary/ml_models/real_model.pt

@@ -24,7 +24,7 @@ class Calendar(HTMLCalendar):
 
 		if diary.exists():
 			emotion = diary[0].emotion
-			img_url = f'<center><img src=/static/emotion_calendar/emotion/{self.img_dic[emotion]}></center>'
+			img_url = f'<center><img width="50" height="50" src=/static/emotion_calendar/emotion/{self.img_dic[emotion]}></center>'
 			onclick_url = f'"/diary/detail/{diary[0].id}"'
 		else:
 			dt_selected = f'{self.year}-{self.month}-{day}'
