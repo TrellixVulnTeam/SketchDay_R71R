@@ -1,4 +1,5 @@
 import email
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
@@ -169,3 +170,25 @@ class DiaryDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('main')
     
+# 추천 노래 평가
+def rating(request) :
+    # print('I an rating')
+    if request.method == 'POST' :
+        print(request)
+        data = json.load(request)
+        # do something
+        # print(data)
+        diary = Diary.objects.get(pk = data['diary_id'])
+        music = Music.objects.get(pk = data['music_id'])
+        
+        rate = music.rate
+        cnt = music.rate_cnt
+
+        music.rate = (rate*cnt + float(data['score'])) / (cnt+1)
+        music.rate_cnt = cnt+1
+        diary.rate = True
+
+        diary.save()
+        music.save()
+
+        return JsonResponse({'result':'success'})

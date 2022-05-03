@@ -18,4 +18,21 @@ gensim
 rhinoMorph
 jpype1
 sklearn
+django-braces
+nltk
+braceexpand
+omegaconf
+torchvision
+torch_optimizer
+ftfy
+kornia==0.6.1
+git+https://github.com/pvigier/perlin-numpy
+ftfy regex tqdm omegaconf pytorch-lightning
+imageio-ffmpeg
+imageio
+moviepy
+einops
+channels==2.4.0
+channels-redis==2.4.2
+asgiref==3.3.4
 matplotlib
