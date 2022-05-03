@@ -7,6 +7,42 @@
 {% block title %}{{ diary.title }} | SketchDay{% endblock title %}
 
 {% block content %}
+
+<!-- Modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ratingModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>추천 노래 평가하기 </p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id="first">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id="second">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id = "third">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id="fourth">
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16" id=fifth>
+          <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+        </svg>
+        <span id='score'>0</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="post-detail">
     <div class="header">
       <a href="{% url 'main' %}">&lt; 목록으로</a>
@@ -14,11 +50,12 @@
       <div class="buttons">
         <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>
         <a class="btn btn-primary btn-sm" href="{% url 'diary-update' diary.id%}">수정</a>
+        <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">평가</a>
       </div>
       {% endif %}
     </div>
     <article>
-      {% comment %} <img class="image" src="{{ diary.image1.url }}"> {% endcomment %}
+      <img class="image" src="{{ diary.image.url }}">
       <div class="post-meta">
           <div class="item-info">  
             <div  class="title">{{ diary.title }} </div>
@@ -64,6 +101,73 @@ var emotionPieChart = new Chart(emotion_pie, {
         }]
     }
 });
+
+// rating system
+const one = document.getElementById('first')
+const two = document.getElementById('second')
+const three = document.getElementById('third')
+const four = document.getElementById('fourth')
+const five = document.getElementById('fifth')
+const num = document.getElementById('score')
+//console.log(one)
+
+const handleSelect = (selection) => {
+  switch(selection) {
+    case 'first' : {
+      one.setAttribute("fill", "red")
+      two.setAttribute("fill", "currentColor")
+      three.setAttribute("fill", "currentColor")
+      four.setAttribute("fill", "currentColor")
+      five.setAttribute("fill", "currentColor")
+      num.innerText = 1
+      return
+    }
+    case 'second' : {
+      one.setAttribute("fill", "red")
+      two.setAttribute("fill", "red")
+      three.setAttribute("fill", "currentColor")
+      four.setAttribute("fill", "currentColor")
+      five.setAttribute("fill", "currentColor")
+      num.innerText = 2
+      return
+    }
+    case 'third' : {
+      one.setAttribute("fill", "red")
+      two.setAttribute("fill", "red")
+      three.setAttribute("fill", "red")
+      four.setAttribute("fill", "currentColor")
+      five.setAttribute("fill", "currentColor")
+      num.innerText = 3
+      return
+    }
+    case 'fourth' : {
+      one.setAttribute("fill", "red")
+      two.setAttribute("fill", "red")
+      three.setAttribute("fill", "red")
+      four.setAttribute("fill", "red")
+      five.setAttribute("fill", "currentColor")
+      num.innerText = 4
+      return
+    }
+    case 'fifth' : {
+      one.setAttribute("fill", "red")
+      two.setAttribute("fill", "red")
+      three.setAttribute("fill", "red")
+      four.setAttribute("fill", "red")
+      five.setAttribute("fill", "red")
+      num.innerText = 5
+      return
+    }
+  }
+}
+
+const arr = [one, two, three, four, five]
+
+arr.forEach(item=> item.addEventListener('mouseover', (event)=> {
+  handleSelect(event.target.id)
+  //console.log(event.target)
+}))
+
 </script>
 
 {% endblock content %}
