@@ -156,13 +156,13 @@ var emotionPieChart = new Chart(emotion_pie, {
         datasets: [{
             data: {{ diary.emotion_value }},
             backgroundColor: [
-                "#f7323f",
-                "#673ba7",
-                "#ff6384",
-                "#cc65fe",
-                "#ffce56",
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(255, 205, 86, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(255, 99, 132, 0.6)',
             ],
-            borderWidth: 0
+            borderWidth: 2
         }]
     }
 });

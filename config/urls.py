@@ -42,7 +42,6 @@ urlpatterns = [
         TemplateView.as_view(template_name='account/email_confirmation_required.html'),
         name='account_email_confirmation_required',
     ),
-    
     # 이메일 변경
     path(
         'email-confirmation-done/',
