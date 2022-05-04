@@ -139,6 +139,7 @@ body.with-background {
 .post-list {
   margin: 70px auto 260px;
   max-width: var(--max-content-width);
+  margin-top: 110px;
 }
 
 .post-list .header {
@@ -318,6 +319,7 @@ body.with-background {
   padding: 25px 20px;
   margin: 51px auto 49px;
   max-width: var(--max-content-width);
+  margin-top: 110px;
 }
 
 .profile-header > .profile-pic {
@@ -373,6 +375,7 @@ body.with-background {
   margin: 67px auto;
   max-width: var(--max-post-width);
   width: 100%;
+  margin-top: 110px;
 }
 
 .post-detail .header {
@@ -502,6 +505,7 @@ body.with-background {
   margin: 71px auto 250px;
   grid-template-columns: repeat(2, 1fr);
   gap: 27px 43px;
+  margin-top: 110px;
 }
 
 .post-form > .title,

@@ -18,8 +18,6 @@ class CalendarView(generic.ListView):
         d = get_date(self.request.GET.get('month', None))
         user_id = self.kwargs.get('user_id')
         # diarys = context.filter(dt_created__month=d)
-        context['obj_new'] = Diary.objects.all()
-        print(context['obj_new'])
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)
         context['calendar'] = mark_safe(html_cal)

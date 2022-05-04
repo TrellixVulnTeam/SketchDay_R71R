@@ -670,6 +670,7 @@
  @media (min-width: 768px) {
    .container, .container-sm, .container-md {
      max-width: 720px;
+     margin-top: 110px;
    }
  }
  
@@ -3099,6 +3100,7 @@
   width: 100%;
   max-width: 240px;
   margin: 24px auto;
+  
  }
  
  .btn-primary:hover {
@@ -4302,6 +4304,11 @@
    justify-content: space-between;
    padding-top: 0.5rem;
    padding-bottom: 0.5rem;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index:100;
  }
  
  .navbar > .container,

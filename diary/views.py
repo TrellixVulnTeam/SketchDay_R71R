@@ -83,8 +83,8 @@ def diaryDetailView(request, diary_id):
     except:
         pass
     context = {'diary': qs,
-               'music': db_music,
-               'rec_diary': db_rec_diary}
+            'music': db_music,
+            'rec_diary': db_rec_diary}
 
     return render(request, 'diary/diary_detail.html', context)
 
