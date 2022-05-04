@@ -28,10 +28,77 @@
 
   <div class="container">
     <a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
+    
+    <!-- modal 구동 버튼 (trigger) -->
+    <a class="btn btn-info center" data-toggle="modal" data-target="#myModal">
+      이번 달 나는?
+    </a>
+
+    <!-- Modal -->
+
     <a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
     {{ calendar }}
-    <center><img src="{{ img_path }}" style="width:250px; height:250px;"></center>
   </div>
 </body>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-fullsize" role="document">
+    <div class="modal-content modal-fullsize">
+      <div class="modal-header">
+        <h4 class="modal-title center" id="myModalLabel">임시 제목</h4>
+        <button type="button" class="close right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>워드 클라우드</p>
+          <center><img src="{{ img_path }}" style="width:250px; height:250px;"></center>
+        </div>
+        <div>
+          <p>감정선</p>
+          <canvas id="monthChart"></canvas>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var emotion_line = document.getElementById('monthChart').getContext('2d');
+  var emotionLineChart = new Chart(emotion_line, {
+      type: 'line',
+      data:{
+        labels: {{ labels }},
+        datasets: [{
+            label: '행복',
+            data: {{ happy }},
+            borderColor: "#f7323f",
+            lineTension: 0,
+        },{
+              label: '평온',
+              data: {{ normal }},
+              borderColor: "#673ba7",
+              lineTension: 0,
+        },{
+              label: '슬픔',
+              data: {{ sad }},
+              borderColor: "#ff6384",
+              lineTension: 0,
+        },{
+              label: '분노',
+              data: {{ angry }},
+              borderColor: "#cc65fe",
+              lineTension: 0,
+        },{
+              label: '불안',
+              data: {{ anxiety }},
+              borderColor: "#ffce56",
+              lineTension: 0,
+        }]
+      }
+  });
+</script>
 {% endblock content %}

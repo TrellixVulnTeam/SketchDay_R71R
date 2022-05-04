@@ -16,7 +16,6 @@ class Calendar(HTMLCalendar):
 		}
 		super(Calendar, self).__init__()
 
-
 	def formatday(self, day, diarys):		
 		img_url = ''
 		diary = diarys.filter(dt_created__day=day)
@@ -31,16 +30,14 @@ class Calendar(HTMLCalendar):
 			onclick_url = f'"/diary/new/{dt_selected}"'
 
 		if day != 0:
-			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url} {dt_selected}</ul></td>'''
+			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
 		return '<td></td>'
-
 
 	def formatweek(self, theweek, diarys):
 		week = ''
 		for d, weekday in theweek:
 			week += self.formatday(d, diarys)
 		return f'<tr> {week} </tr>'
-
 
 	def formatmonth(self, user, withyear=True):
 		diarys = Diary.objects.filter(author=user, dt_created__month=self.month)

@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 import calendar
 from .utils import Calendar
 from diary.models import *
+import json
 
 # wordCloud
 from wordcloud import WordCloud
@@ -20,7 +21,7 @@ class CalendarView(generic.ListView):
         d = get_date(self.request.GET.get('month', None))
         diarys = Diary.objects.filter(author=self.request.user, dt_created__month=d.month)
         
-        # 이번달 전체 일기 내용
+        # 이번달 전체 일기 내용 워드 클라우드 만들기
         this_month_diary = ""
         for i in range(len(diarys)):
             this_month_diary += diarys[i].content
@@ -35,6 +36,31 @@ class CalendarView(generic.ListView):
             context['img_path'] = down_name
         else:
             context['img_path'] = ''
+
+        # 이번달 감정 결과 그래프 만들기
+        # month_len = [0,31,28,31,30,31,30,31,31,30,31,30,31]
+        month_len = calendar.monthrange(d.year,d.month)
+        happy = [0] * month_len[1]
+        normal = [0] * month_len[1]
+        sad = [0] * month_len[1]
+        angry = [0] * month_len[1]
+        anxiety = [0] * month_len[1]
+        jsonDec = json.decoder.JSONDecoder()
+        for i in range(len(diarys)):
+            ind = d.day
+            emotion_val_calendar = jsonDec.decode(diarys[i].emotion_value)
+            happy[ind] = float(emotion_val_calendar[4])
+            normal[ind] = float(emotion_val_calendar[3])
+            sad[ind] = float(emotion_val_calendar[2])
+            angry[ind] = float(emotion_val_calendar[1])
+            anxiety[ind] = float(emotion_val_calendar[0])
+            labels = [i for i in range(1, month_len[1])]
+        context['happy'] = happy
+        context['normal'] = normal
+        context['sad'] = sad
+        context['angry'] = angry
+        context['anxiety'] = anxiety
+        context['labels'] = labels
 
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)
