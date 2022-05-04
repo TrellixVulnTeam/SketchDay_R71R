@@ -27,11 +27,17 @@ urlpatterns = [
     #admin
     path('admin/', admin.site.urls),
     
-    #Login
-    path('', include('Login.urls')),
     #Diary
     path('diary/', include('diary.urls')),
     
+    #Login
+    path('', include('Login.urls')),
+    
+    # calendar
+    path('calendar/', include('emotion_calendar.urls')),
+        
+
+
     # 이메일 변경
     path(
         'email-confirmation-done/',
@@ -46,9 +52,6 @@ urlpatterns = [
         ),
     
     path('', include('allauth.urls')),
-
-    # 달력
-    path('calendar/', include('emotion_calendar.urls'), name='calendar')
 ]
 # 개발 모드에서만 디버그, 배포에서는 동작 안함
 if settings.DEBUG:
