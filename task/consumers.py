@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 
 from PIL import Image
 
-class BackgroundTaskConsumer(SyncConsumer) :
+class BackgroundTaskConsumer(SyncConsumer) :        
     def sketch(self, message) :
         prompts = message['prompts']
         output = 'static/diary_img/'+ message['userId'] + '.png'
