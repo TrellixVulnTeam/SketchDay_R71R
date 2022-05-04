@@ -1,15 +1,17 @@
 import email
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
+from django.utils import timezone
 # generic view
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from numpy import rec
 from sympy import Id
 from braces.views import LoginRequiredMixin
 
-from diary.models import Diary
+from diary.models import Diary, Comment
 from diary.models import Music
 from Login.models import User
 from diary.forms import DiaryCreateForm
@@ -81,13 +83,16 @@ def diaryDetailView(request, diary_id):
     db_rec_diary = get_object_or_404(Diary, pk=recommendation_ml.get_recommendation_diary(qs.vector, current_id))
     jsonDec = json.decoder.JSONDecoder()
 
+    comments = Comment.objects.filter(diary=diary_id)
+
     try:
         qs.emotion_value = jsonDec.decode(qs.emotion_value)
     except:
         pass
     context = {'diary': qs,
             'music': db_music,
-            'rec_diary': db_rec_diary}
+            'rec_diary': db_rec_diary,
+            'comments' : comments}
 
     return render(request, 'diary/diary_detail.html', context)
 
@@ -195,3 +200,36 @@ def rating(request) :
         music.save()
 
         return JsonResponse({'result':'success'})
+
+
+@login_required
+def comment_write_view(request, pk):
+    diary = get_object_or_404(Diary, id=pk)
+    writer = request.POST.get('writer')
+    content = request.POST.get('content')
+    if content:
+        comment = Comment.objects.create(diary=diary, content=content, author=request.user, dt_created=timezone.now())
+        comment.save()
+        data = {
+            'writer': writer,
+            'content': content,
+            'created': timezone.now(),
+            'comment_id': comment.id
+        }
+        
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
+
+@login_required
+def comment_delete_view(request, pk):
+    post = get_object_or_404(Diary, id=pk)
+    comment_id = request.POST.get('comment_id')
+    target_comment = Comment.objects.get(pk = comment_id)
+
+    if request.user == target_comment.author:
+        target_comment.deleted = True
+        target_comment.save()
+        post.save()
+        data = {
+            'comment_id': comment_id,
+        }
+        return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")

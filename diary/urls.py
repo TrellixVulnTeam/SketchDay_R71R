@@ -42,4 +42,9 @@ urlpatterns = [
     
     # 노래 평가
     path('rating/', views.rating, name='music-rating'),
+
+    # 댓글 추가
+    path('<int:pk>/comment/write/', views.comment_write_view, name='comment-write'),
+    # 댓글 삭제
+    path('<int:pk>/commnet/delete/', views.comment_delete_view, name='comment-delete')
 ]
