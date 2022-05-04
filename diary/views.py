@@ -52,7 +52,10 @@ class UserDiaryListView(ListView):
     
     def get_queryset(self):
         user_id = self.kwargs.get("user_id")
-        return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
+        if user_id == self.request.user:
+            return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
+        else:
+            return Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

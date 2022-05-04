@@ -5,10 +5,10 @@ import calendar
 from .utils import Calendar
 from diary.models import *
 import json
-
+from braces.views import LoginRequiredMixin
 # wordCloud
 from wordcloud import WordCloud
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, generic.ListView):
     model = Diary
     template_name = 'emotion_calendar/calendar.html'
     context_object_name = 'diarys'
@@ -39,28 +39,40 @@ class CalendarView(generic.ListView):
 
         # 이번달 감정 결과 그래프 만들기
         # month_len = [0,31,28,31,30,31,30,31,31,30,31,30,31]
-        month_len = calendar.monthrange(d.year,d.month)
-        happy = [0] * month_len[1]
-        normal = [0] * month_len[1]
-        sad = [0] * month_len[1]
-        angry = [0] * month_len[1]
-        anxiety = [0] * month_len[1]
-        jsonDec = json.decoder.JSONDecoder()
-        for i in range(len(diarys)):
-            ind = d.day
-            emotion_val_calendar = jsonDec.decode(diarys[i].emotion_value)
-            happy[ind] = float(emotion_val_calendar[4])
-            normal[ind] = float(emotion_val_calendar[3])
-            sad[ind] = float(emotion_val_calendar[2])
-            angry[ind] = float(emotion_val_calendar[1])
-            anxiety[ind] = float(emotion_val_calendar[0])
-            labels = [i for i in range(1, month_len[1])]
-        context['happy'] = happy
-        context['normal'] = normal
-        context['sad'] = sad
-        context['angry'] = angry
-        context['anxiety'] = anxiety
-        context['labels'] = labels
+        if len(diarys) != 0:
+            month_len = calendar.monthrange(d.year,d.month)
+            happy = [0] * month_len[1]
+            normal = [0] * month_len[1]
+            sad = [0] * month_len[1]
+            angry = [0] * month_len[1]
+            anxiety = [0] * month_len[1]
+            jsonDec = json.decoder.JSONDecoder()
+            for i in range(len(diarys)):
+                ind = int(str(diarys[i].dt_created).split('-')[2])
+                emotion_val_calendar = jsonDec.decode(diarys[i].emotion_value)
+                happy[ind] = float(emotion_val_calendar[4])
+                normal[ind] = float(emotion_val_calendar[3])
+                sad[ind] = float(emotion_val_calendar[2])
+                angry[ind] = float(emotion_val_calendar[1])
+                anxiety[ind] = float(emotion_val_calendar[0])
+            #     labels = [i for i in range(1, month_len[1]+1)]
+            # context['happy'] = happy[1:]
+            # context['normal'] = normal[1:]
+            # context['sad'] = sad[1:]
+            # context['angry'] = angry[1:]
+            # context['anxiety'] = anxiety[1:]
+            # context['labels'] = labels
+            context['happy'] = sum(happy[1:])/len(diarys)
+            context['normal'] = sum(normal[1:])/len(diarys)
+            context['sad'] = sum(sad[1:])/len(diarys)
+            context['angry'] = sum(angry[1:])/len(diarys)
+            context['anxiety'] = sum(anxiety[1:])/len(diarys)
+        else:
+            context['happy'] = 0
+            context['normal'] = 0
+            context['sad'] = 0
+            context['angry'] = 0
+            context['anxiety'] = 0
 
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)

@@ -22,17 +22,21 @@
   </div>
 {% endif %}
 </div>
-
 <div class="post-list">
   <div class="content-list max-content-width">
     <div class="header">
+      {% if  user == profile_user %}
       <h2>{{profile_user.nickname}}님의 최근 일기</h2>
+      {% else %}
+      <h2>{{profile_user.nickname}}님의 일기장</h2>
+      {% endif %}
+      
       <a class="cp-ic-button after circle morereview" href="{% url 'main' %}">
         공유 일기보기
       </a>
     </div>
 
-   
+    {% if  user == profile_user %}
       <div class="header">
         {% if user_diary %}
         <a class="link" href="{% url 'user-review-list' profile_user.id %}">
@@ -40,6 +44,15 @@
           {% comment %} <img class="triangle-icon" src="{% static '' %}" alt="triangle icon"> {% endcomment %}
         </a>
         {% endif %}
+    {% else %}
+      {% if user_diary %}
+      <a class="link" href="{% url 'user-review-list' profile_user.id %}">
+        <span>{{profile_user.nickname}}님의 공유 일기 전체보기</span>
+        {% comment %} <img class="triangle-icon" src="{% static '' %}" alt="triangle icon"> {% endcomment %}
+      </a>
+      {% endif %}
+    {% endif %}
+
       </div>
       <div class="posts">
     
@@ -50,6 +63,9 @@
               <h2 class="title">{{diary.title}}</h2>
               <div class="meta">
                 {{diary.dt_created}}
+              </div>
+              <div class="meta">
+                {{ diary.author.nickname }}
               </div>
               <a class="btn btn-primary" href="{% url 'diary-detail' diary.id %}">자세히보기</a>
             </div>

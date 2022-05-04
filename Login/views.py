@@ -25,11 +25,15 @@ class ProfileView(DetailView):
     template_name = "Login/profile.html"
     pk_url_kwarg = 'user_id'
     context_object_name = "profile_user"
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('user_id')
-        context['user_diary'] = Diary.objects.filter(author__id = user_id).order_by("-dt_created")[:4]
+        if user_id == self.request.user:
+            context['user_diary'] =  Diary.objects.filter(author__id = user_id).order_by("-dt_created")[:4]
+        else:
+            context['user_diary'] =  Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')[:4]
         return context
 
 
