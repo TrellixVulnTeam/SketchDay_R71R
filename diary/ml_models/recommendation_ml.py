@@ -11,6 +11,8 @@ from sklearn.neighbors import NearestNeighbors
 import diary.apps
 import sqlite3
 
+from diary.models import Music
+
 
 rn = rhinoMorph.startRhino()
 stop_words = '''
@@ -72,9 +74,16 @@ def get_recommendation(vec):
     print(vec)
     cand = diary.apps.DiaryConfig.rec_model.kneighbors(vec.reshape(1, -1))[1][0]
     print(cand)
-    for i in cand:
-        print(diary.apps.DiaryConfig.song_df.loc[i]['title'],diary.apps.DiaryConfig.song_df.loc[i]['artist'])
-        print(diary.apps.DiaryConfig.song_df.loc[i]['lyric'])
+    sort_music = []
+    for idx, i in enumerate(cand):
+        music = Music.objects.get(id=i)
+        sort_music.append([music.id, music.rate + (5-idx)])
+        print(music.title, music.artist, music.rate, 5-idx)
+        print(music.lyric)
+        # print(diary.apps.DiaryConfig.song_df.loc[i]['title'],diary.apps.DiaryConfig.song_df.loc[i]['artist'])
+        # print(diary.apps.DiaryConfig.song_df.loc[i]['lyric'])
+    sort_music.sort(key=lambda row : row[1], reverse=True)
+    print(sort_music)
     return cand[0]
 
 def get_recommendation_diary(vec,cur_id):
