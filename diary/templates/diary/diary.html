@@ -14,10 +14,7 @@
 {% endif %}
 <div class="post-list">
   <div class="header">
-    <h2>공유 된 일기</h2>
-    <a class="btn btn-primary" href="{% url 'diary-create' %}">
-      <span>일기 작성</span>
-    </a>
+    <h2>공유 일기</h2>
   </div>
 
   <div class="posts">
@@ -31,6 +28,9 @@
           <h2 class="title">{{diary.title}}</h2>
           <div class="meta">
             {{diary.dt_created}}
+          </div>
+          <div class="meta">
+            {{ diary.author.nickname }}
           </div>
           <a class="btn btn-primary" href="{% url 'diary-detail' diary.id %}">자세히보기</a>
         </div>
