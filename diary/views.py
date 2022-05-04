@@ -1,12 +1,15 @@
 import email
+import imp
 from django.http import JsonResponse, HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from django.utils import timezone
+from allauth.account.models import EmailAddress
+from allauth.account.utils import send_email_confirmation
 # generic view
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView
 from numpy import rec
 from sympy import Id
 from braces.views import LoginRequiredMixin
@@ -21,6 +24,7 @@ from .ml_models import recommendation_ml
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+
 from diary import apps
 
 from .ml_models.make_text2art import make_prompts
@@ -31,6 +35,7 @@ channel_layer = get_channel_layer()
 
 import json
 import datetime
+
 
 # Create your views here.
 
@@ -62,18 +67,7 @@ class UserDiaryListView(ListView):
         context['profile_user'] = get_object_or_404(User, id=self.kwargs.get("user_id"))
         return context
         
-    
-# 일기 세부 내용
-# class DiaryDetailView(DetailView):
-#     model = Diary
-#     template_name = 'diary/diary_detail.html'
-#     pk_url_kwarg = 'diary_id'
-#     # model.emotion_value = jsonDec.decode(model.emotion_value)
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         jsonDec = json.decoder.JSONDecoder()
-#         context['emotion_value'] = [0,1]
-#         return context
+
 
 @login_required
 def diaryDetailView(request, diary_id):
@@ -96,68 +90,62 @@ def diaryDetailView(request, diary_id):
 
     return render(request, 'diary/diary_detail.html', context)
 
-# 일기 작성
-# class DiaryCreateView(CreateView):
-#     model = Diary
-#     form_class = DiaryCreateForm
-#     template_name = 'diary/diary_form.html'
-#     # emotion_model = emotional_analysis.EmotionAnalysis()
-#     # model.emotion = emotion_model.predict({"data":model.content})
 
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
-#     def get_success_url(self):
-#         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
 
-# 일기 작성 - 감정분석 수행되도록 수정
+
 @login_required
 def diaryCreateView(request, dt_selected=None):
-    if request.method == 'POST':
-        form = DiaryCreateForm(request.POST)
-        current_id = User.objects.get(id=request.user.id)
-        if form.is_valid():
-            # post = form.save(commit=True)
-            post = form.save(commit=False)
-            post.author = request.user  # 현재 로그인 user instance
-            post.vector = recommendation_ml.get_vector(post.content)
-            post.music_no = recommendation_ml.get_recommendation(post.vector)
-            emotion_model = emotional_analysis.EmotionAnalysis()
-            emotion_val = emotion_model.predict({"data":post.content})
-            post.emotion = emotion_val[1]
-            # print(emotion_val[0])
-            # print(type(emotion_val[0]))
-            post.emotion_value = json.dumps(emotion_val[0])
+    # 이메일 인증 여부
+    if EmailAddress.objects.filter(user=request.user, verified=True).exists():
+        if request.method == 'POST':
+            form = DiaryCreateForm(request.POST)
+            current_id = User.objects.get(id=request.user.id)
+            if form.is_valid():
+                # post = form.save(commit=True)
+                post = form.save(commit=False)
+                post.author = request.user  # 현재 로그인 user instance
+                post.vector = recommendation_ml.get_vector(post.content)
+                post.music_no = recommendation_ml.get_recommendation(post.vector)
+                emotion_model = emotional_analysis.EmotionAnalysis()
+                emotion_val = emotion_model.predict({"data":post.content})
+                post.emotion = emotion_val[1]
+                # print(emotion_val[0])
+                # print(type(emotion_val[0]))
+                post.emotion_value = json.dumps(emotion_val[0])
 
-            # prompt text 생성
-            text = make_prompts(post.content, emotion_val[1])
-            # background task에 전달
-            nick = User.objects.get(email=request.user).nickname
+                # prompt text 생성
+                text = make_prompts(post.content, emotion_val[1])
+                # background task에 전달
+                nick = User.objects.get(email=request.user).nickname
 
-            try:
-                today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
-            except ObjectDoesNotExist:
-                today = 1
-            if today == 1:
-                post.save()
-                async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
+                try:
+                    today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
+                except ObjectDoesNotExist:
+                    today = 1
+                if today == 1:
+                    post.save()
+                    async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
 
-                messages.success(request, '일기를 저장했습니다.')
-                return redirect('main')
-            else:
-                messages.warning(request, '작성한 일기가 있습니다.')
-                return redirect('main')
-    else:
-        if dt_selected:
-            year, month, day = map(int, dt_selected.split('-'))
-            init_date = datetime.date(year, month, day)
-            form = DiaryCreateForm(initial={'dt_created' : init_date})
+                    messages.success(request, '일기를 저장했습니다.')
+                    return redirect('cal:calendar')
+                else:
+                    messages.warning(request, '작성한 일기가 있습니다.')
+                    return redirect('cal:calendar')
         else:
-            form = DiaryCreateForm()
+            if dt_selected:
+                year, month, day = map(int, dt_selected.split('-'))
+                init_date = datetime.date(year, month, day)
+                form = DiaryCreateForm(initial={'dt_created' : init_date})
+            else:
+                form = DiaryCreateForm()
 
-    return render(request, 'diary/diary_form.html',{
-        'form': form,
-    })
+        return render(request, 'diary/diary_form.html',{
+            'form': form,
+        })
+    else:
+        # 이메일 재전송
+        send_email_confirmation(request, request.user)
+        return redirect("account_email_confirmation_required")
 
 # 일기 수정
 class DiaryUpdateView(UpdateView):
@@ -176,7 +164,7 @@ class DiaryDeleteView(DeleteView):
     pk_url_kwarg = 'diary_id'
     
     def get_success_url(self):
-        return reverse('main')
+        return reverse('cal:calendar')
     
 # 추천 노래 평가
 def rating(request) :

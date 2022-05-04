@@ -44,7 +44,7 @@
 
 <div class="post-detail">
     <div class="header">
-      <a href="{% url 'main' %}">&lt; 목록으로</a>
+      <a href="{% url 'cal:calendar' %}">&lt; 목록으로</a>
       {% if diary.author == user%}
       <div class="buttons">
         <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>

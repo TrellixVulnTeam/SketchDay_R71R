@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from allauth.account.views import PasswordChangeView
 from django.urls import reverse
 from calendar import HTMLCalendar
@@ -11,7 +11,7 @@ from braces.views import LoginRequiredMixin
 # Create your views here
 
 def index(request):
-    return render(request, 'Login/index.html')
+    return redirect('account_login')
 
 
 # 비밀번호 변경
@@ -47,7 +47,7 @@ class ProfileSetView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def get_success_url(self):
-        return reverse('main')
+        return reverse('cal:calendar')
 
 # 프로필 수정
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
