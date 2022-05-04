@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     "debug_toolbar",
+    'emotion_calendar',
     'Login',
     'diary',
     'widget_tweaks',
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'emotion_calendar',
     'channels',
 ]
 
@@ -157,7 +157,8 @@ AUTHENTICATION_BACKENDS = [
 
 # url 설정
 ACCOUNT_SIGNUP_REDIRECT_URL= "profile-set" # 회원가입을 하면 profile-set 이동
-LOGIN_REDIRECT_URL="main" # 로그인을 하면 index로 이동
+LOGIN_REDIRECT_URL="cal:calendar" # 로그인을 하면 calendar로 이동
+ACCOUN_LOGOUT_REDIRECT_URL="account_login" # 로그아웃 하면 로그인으로
 LOGIN_URL = 'account_login' # 로그인이 안 된다면 로그인 페이지로 이동
 ACCOUNT_LOGOUT_ON_GET=True # 바로 로그아웃 (기본 값은 False)
 ACCOUNT_AUTHENTICATION_METHOD="email"  # email로 유저 로그인
