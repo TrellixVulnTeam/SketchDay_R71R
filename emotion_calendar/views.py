@@ -5,10 +5,10 @@ import calendar
 from .utils import Calendar
 from diary.models import *
 import json
-
+from braces.views import LoginRequiredMixin
 # wordCloud
 from wordcloud import WordCloud
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin, generic.ListView):
     model = Diary
     template_name = 'emotion_calendar/calendar.html'
     context_object_name = 'diarys'
