@@ -35,8 +35,6 @@ urlpatterns = [
     
     # calendar
     path('calendar/', include('emotion_calendar.urls')),
-        
-
 
     # 이메일 변경
     path(

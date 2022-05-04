@@ -27,7 +27,7 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
             this_month_diary += diarys[i].content
             this_month_diary += ' '
         if this_month_diary != "":
-            wc = WordCloud(font_path='static/YdestreetB.ttf', width=400, height=400, scale=2.0, max_font_size=250)
+            wc = WordCloud(font_path='static/YdestreetB.ttf', width=600, height=600, scale=2.0, max_font_size=250)
             gen = wc.generate(this_month_diary)
             f_name = str(self.request.user).split('.')[0]
             full_name = 'static/'+ f_name +'.png'
@@ -41,11 +41,11 @@ class CalendarView(LoginRequiredMixin, generic.ListView):
         # month_len = [0,31,28,31,30,31,30,31,31,30,31,30,31]
         if len(diarys) != 0:
             month_len = calendar.monthrange(d.year,d.month)
-            happy = [0] * month_len[1]
-            normal = [0] * month_len[1]
-            sad = [0] * month_len[1]
-            angry = [0] * month_len[1]
-            anxiety = [0] * month_len[1]
+            happy = [0] * (month_len[1]+1)
+            normal = [0] * (month_len[1]+1)
+            sad = [0] * (month_len[1]+1)
+            angry = [0] * (month_len[1]+1)
+            anxiety = [0] * (month_len[1]+1)
             jsonDec = json.decoder.JSONDecoder()
             for i in range(len(diarys)):
                 ind = int(str(diarys[i].dt_created).split('-')[2])
