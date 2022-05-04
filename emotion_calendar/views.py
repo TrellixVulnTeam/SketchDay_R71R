@@ -54,13 +54,18 @@ class CalendarView(generic.ListView):
             sad[ind] = float(emotion_val_calendar[2])
             angry[ind] = float(emotion_val_calendar[1])
             anxiety[ind] = float(emotion_val_calendar[0])
-            labels = [i for i in range(1, month_len[1]+1)]
-        context['happy'] = happy[1:]
-        context['normal'] = normal[1:]
-        context['sad'] = sad[1:]
-        context['angry'] = angry[1:]
-        context['anxiety'] = anxiety[1:]
-        context['labels'] = labels
+        #     labels = [i for i in range(1, month_len[1]+1)]
+        # context['happy'] = happy[1:]
+        # context['normal'] = normal[1:]
+        # context['sad'] = sad[1:]
+        # context['angry'] = angry[1:]
+        # context['anxiety'] = anxiety[1:]
+        # context['labels'] = labels
+        context['happy'] = sum(happy[1:])/len(diarys)
+        context['normal'] = sum(normal[1:])/len(diarys)
+        context['sad'] = sum(sad[1:])/len(diarys)
+        context['angry'] = sum(angry[1:])/len(diarys)
+        context['anxiety'] = sum(anxiety[1:])/len(diarys)
 
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)
