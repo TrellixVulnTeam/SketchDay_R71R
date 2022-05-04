@@ -47,19 +47,19 @@ class CalendarView(generic.ListView):
         anxiety = [0] * month_len[1]
         jsonDec = json.decoder.JSONDecoder()
         for i in range(len(diarys)):
-            ind = d.day
+            ind = int(str(diarys[i].dt_created).split('-')[2])
             emotion_val_calendar = jsonDec.decode(diarys[i].emotion_value)
             happy[ind] = float(emotion_val_calendar[4])
             normal[ind] = float(emotion_val_calendar[3])
             sad[ind] = float(emotion_val_calendar[2])
             angry[ind] = float(emotion_val_calendar[1])
             anxiety[ind] = float(emotion_val_calendar[0])
-            labels = [i for i in range(1, month_len[1])]
-        context['happy'] = happy
-        context['normal'] = normal
-        context['sad'] = sad
-        context['angry'] = angry
-        context['anxiety'] = anxiety
+            labels = [i for i in range(1, month_len[1]+1)]
+        context['happy'] = happy[1:]
+        context['normal'] = normal[1:]
+        context['sad'] = sad[1:]
+        context['angry'] = angry[1:]
+        context['anxiety'] = anxiety[1:]
         context['labels'] = labels
 
         cal = Calendar(d.year, d.month)
