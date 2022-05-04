@@ -95,6 +95,57 @@
     <p>{{ rec_diary.title }}</p>
     <p>{{ rec_diary.content }}</p>
 
+    <div class="card">
+      <div class="card-header">
+          <div class="col-md-12">
+              {% csrf_token %}
+              <div class="form-group row">
+                  <textarea class="form-control" id="content_id" rows="3" placeholder="댓글을 입력해주세요."></textarea>
+              </div>
+              <div class="text-right" style="float:right">
+                  <button id="comment_write" class="btn btn-sm">댓글달기</button>
+              </div>
+          </div>
+          <hr>
+          <div id="more_comment">
+              {% if comments %}
+                  {% for comment in comments %}
+                  <div id='{{ comment.id }}'>
+                      {% if comment.deleted %}
+                      <span>삭제된 댓글입니다.</span><hr>
+                      {% else %}
+                          {% if comment.writer == diary.writer %}
+                          <strong>{{ comment.writer }}&nbsp;<span>(글쓴이)</span></strong>
+                          {% else  %}
+                          <strong>{{ comment.writer }}</strong>
+                          {% endif %}
+                          <span style="float:right">{{ comment.created }}</span>
+                          {% if comment.writer == request.user or request.user.level == '0' or request.user.level == '1' %}
+                          <div>
+                              <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                              <div style="text-align: right;">
+                                  <a onclick="commentDelete('{{comment.id}}');">댓글삭제</a>
+                              </div>
+                          </div>
+                          <hr>
+                          {% else %}
+                          <div>
+                              <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
+                          </div>
+                          <hr>
+                          {% endif %}
+                      {% endif %}
+                  </div>
+                  <div class='{{ comment.id }}'></div>
+                  {% endfor %}
+              {% endif %}
+              <input type="hidden" id="comment_writer" value={{request.user}}>
+              <div id="comment_list"></div>
+          </div>
+      </div>
+  </div>
+
+
 </div>
 <script>
 var emotion_pie = document.getElementById('myChart').getContext('2d');
@@ -212,6 +263,71 @@ btnAjax.addEventListener('click', e => {
     }
   })
 })
+
+// 댓글 기능
+$(document).ready(function () {
+  $('#comment_write').click(function () {
+      var content= $("#content_id").val();
+      var writer= $("#comment_writer").val();
+      $.ajax({
+          type: "POST",
+          url: "{% url 'comment-write' diary.id %}",
+          dataType: "json",
+          data: {
+              'writer': writer,
+              'content': content,
+              'csrfmiddlewaretoken': '{{csrf_token}}',
+          },
+          success: function (response) {
+              if (response.self_comment) {
+                  $('#comment_list').append(
+                     '<div><div id='+response.comment_id+'><strong>'+response.writer+'&nbsp;<span>'+response.self_comment+'</span></strong>'+
+                     '<span style="float:right;">'+response.created+'</span>'+
+                     '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+
+                     '</div><div style="text-align:right;"><a onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
+                  );
+              }
+              else{
+                  $('#comment_list').append(
+                      '<div><div id='+response.comment_id+'><strong>'+response.writer+'</strong>'+
+                      '<span style="float:right;">'+response.created+'</span>'+
+                      '<div><div style="white-space:pre-wrap; text-align:left;">'+response.content+
+                      '</div><div style="text-align:right;"><a onclick="commentDelete('+response.comment_id+');">댓글삭제</a></div></div><hr></div><div class='+response.comment_id+'></div>'
+                  );
+              }
+              $('#content_id').val("");
+          },
+          error: function () {
+              if ($('#content_id').val()=="") {
+                  alert('댓글을 입력해주세요.');
+              }
+          },
+      })
+  });
+});
+
+//댓글 삭제
+function commentDelete(value) {
+  var comment_id = value;
+  var delete_warning = confirm('댓글을 삭제하시겠습니까?');
+  if (delete_warning == true) {
+      $.ajax({
+          type: "POST",
+          url: "{% url 'comment-delete' diary.id %}",
+          dataType: "json",
+          data: {
+              'comment_id': comment_id,
+              'csrfmiddlewaretoken': '{{csrf_token}}',
+          },
+          success: function (response) {
+              $('#'+response.comment_id).replaceWith('<span style="color:gray;">삭제된 댓글입니다.</span><hr>');
+          },
+          error: function () {
+              alert('본인 댓글이 아닙니다.');
+          },
+      });
+  }
+}
 
 </script>
 

@@ -46,3 +46,9 @@ class Music(models.Model):
     url = models.CharField(max_length=256)
     rate = models.FloatField(default=0)
     rate_cnt = models.IntegerField(default=0)
+
+class Comment(models.Model) :
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    diary = models.ForeignKey(Diary, on_delete=models.CASCADE)
+    content = models.TextField()
+    dt_created = models.DateField()
