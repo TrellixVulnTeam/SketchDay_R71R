@@ -2,21 +2,33 @@
 
 {% load static %}
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'emotion_calendar/css/calender_styles.css' %}?1311">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
 
   <div class="container">
-    <a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
+    <div class="row">
+      <div class="col-sm-12">
+        <a class="btn btn-info left" href="{% url 'cal:calendar' %}?{{ prev_month }}"> Previous Month </a>
+        <a class="btn btn-info center" data-toggle="modal" data-target="#myModal">
+          이번 달 나는?
+        </a>
+        <a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
+        {{ calendar }}
+      </div>
+    </div>
     
-    <!-- modal 구동 버튼 (trigger) -->
-    <a class="btn btn-info center" data-toggle="modal" data-target="#myModal">
-      이번 달 나는?
-    </a>
-
-    <!-- Modal -->
-
-    <a class="btn btn-info right" href="{% url 'cal:calendar' %}?{{ next_month }}"> Next Month </a>
-    {{ calendar }}
   </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -47,35 +59,60 @@
 <script>
   var emotion_line = document.getElementById('monthChart').getContext('2d');
   var emotionLineChart = new Chart(emotion_line, {
-      type: 'line',
+      type: 'bar',
+      // data:{
+      //   labels: {{ labels }},
+      //   datasets: [{
+      //       label: '행복',
+      //       data: {{ happy }},
+      //       borderColor: "#f7323f",
+      //       lineTension: 0,
+      //   },{
+      //         label: '평온',
+      //         data: {{ normal }},
+      //         borderColor: "#673ba7",
+      //         lineTension: 0,
+      //   },{
+      //         label: '슬픔',
+      //         data: {{ sad }},
+      //         borderColor: "#ff6384",
+      //         lineTension: 0,
+      //   },{
+      //         label: '분노',
+      //         data: {{ angry }},
+      //         borderColor: "#cc65fe",
+      //         lineTension: 0,
+      //   },{
+      //         label: '불안',
+      //         data: {{ anxiety }},
+      //         borderColor: "#ffce56",
+      //         lineTension: 0,
+      //   }]
+      // }
       data:{
-        labels: {{ labels }},
+        labels: ['기쁨', '평온', '슬픔', '화남', '불안'],
         datasets: [{
-            label: '행복',
-            data: {{ happy }},
-            borderColor: "#f7323f",
-            lineTension: 0,
-        },{
-              label: '평온',
-              data: {{ normal }},
-              borderColor: "#673ba7",
-              lineTension: 0,
-        },{
-              label: '슬픔',
-              data: {{ sad }},
-              borderColor: "#ff6384",
-              lineTension: 0,
-        },{
-              label: '분노',
-              data: {{ angry }},
-              borderColor: "#cc65fe",
-              lineTension: 0,
-        },{
-              label: '불안',
-              data: {{ anxiety }},
-              borderColor: "#ffce56",
-              lineTension: 0,
+            label: '이번달 총 감정지수',
+            data: [{{ happy }}, {{ normal }}, {{ sad }}, {{ angry }}, {{ anxiety }}],
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+          ],
+          borderWidth: 1,
         }]
+      },
+      options: {
+        indexAxis: 'y',
       }
   });
 </script>
