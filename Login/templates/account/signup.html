@@ -8,7 +8,7 @@
 {% block content %}
 <div class="signup">
   <form method="post">
-      <a href="{%url 'index' %}">
+      <a href="{%url 'cal:calendar' %}">
         <img class="logo" src="{% static 'Login/assets/Logo.png' %}" alt="Logo">
       </a>
       {% csrf_token %}
