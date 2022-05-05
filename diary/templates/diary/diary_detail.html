@@ -90,8 +90,15 @@
     </div>
     <p>{{ music.title }}</p>
     <p>{{ music.lyric }}</p>
+    <iframe width="560" height="315" 
+    src="https://www.youtube.com/embed/{{ music.url }}"
+    frameborder="0" 
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen></iframe>
+
     <p>{{ rec_diary.title }}</p>
     <p>{{ rec_diary.content }}</p>
+
 
 </div>
 <script>

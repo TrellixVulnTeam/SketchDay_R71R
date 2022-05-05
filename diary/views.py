@@ -78,6 +78,8 @@ def diaryDetailView(request, diary_id):
     db_rec_diary = get_object_or_404(Diary, pk=recommendation_ml.get_recommendation_diary(qs.vector, current_id))
     jsonDec = json.decoder.JSONDecoder()
 
+    db_music.url = db_music.url[17:]
+
     try:
         qs.emotion_value = jsonDec.decode(qs.emotion_value)
     except:

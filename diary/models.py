@@ -36,13 +36,13 @@ class Diary(models.Model):
         return self.title
 
 class Music(models.Model):
-    title = models.CharField(max_length=256)
-    artist = models.CharField(max_length=256)
+    title = models.TextField()
+    artist = models.TextField()
     lyric = models.TextField()
-    genre = models.CharField(max_length=64)
-    release_date = models.CharField(max_length=32)
+    genre = models.TextField()
+    release_date = models.TextField()
     vector = models.TextField()
-    sentiment = models.CharField(max_length=32)
-    url = models.CharField(max_length=256)
+    sentiment = models.TextField()
+    url = models.TextField()
     rate = models.FloatField(default=0)
     rate_cnt = models.IntegerField(default=0)
