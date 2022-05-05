@@ -7,13 +7,13 @@ Pillow==9.1.0
 django-debug-toolbar==3.2.4
 django-bootstrap-v5==1.0.8
 gluonnlp == 0.10.0
-mxnet == 1.8.0.post0
+mxnet
 onnxruntime == 1.8.0
 sentencepiece == 0.1.96
 torch == 1.11.0
 transformers == 4.18.0
-git+https://git@github.com/SKTBrain/KoBERT.git@master
-git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
+# git+https://git@github.com/SKTBrain/KoBERT.git@master
+# git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
 gensim
 rhinoMorph
 jpype1
@@ -28,6 +28,7 @@ ftfy
 kornia==0.6.1
 git+https://github.com/pvigier/perlin-numpy
 ftfy regex tqdm omegaconf pytorch-lightning
+# ftfy regex tqdm omegaconf pytorch-lightning
 imageio-ffmpeg
 imageio
 moviepy
@@ -36,3 +37,5 @@ channels==2.4.0
 channels-redis==2.4.2
 asgiref==3.3.4
 matplotlib
+wordcloud
+sympy

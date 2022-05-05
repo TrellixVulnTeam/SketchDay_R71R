@@ -26,12 +26,22 @@ from django.conf.urls.static import static
 urlpatterns = [
     #admin
     path('admin/', admin.site.urls),
+
+    #calendar
+    path('calendar/', include('emotion_calendar.urls')),
     
-    #Login
-    path('', include('Login.urls')),
     #Diary
     path('diary/', include('diary.urls')),
     
+    #Login
+    path('', include('Login.urls')),
+    
+    # 이메일 재인증
+    path(
+        'email-confirmation-required/',
+        TemplateView.as_view(template_name='account/email_confirmation_required.html'),
+        name='account_email_confirmation_required',
+    ),
     # 이메일 변경
     path(
         'email-confirmation-done/',
@@ -44,11 +54,8 @@ urlpatterns = [
         CustomPasswordChangeView.as_view(),
         name ="account_change_password",
         ),
-    
     path('', include('allauth.urls')),
 
-    # 달력
-    path('calendar/', include('emotion_calendar.urls'), name='calendar')
 ]
 # 개발 모드에서만 디버그, 배포에서는 동작 안함
 if settings.DEBUG:

@@ -21,7 +21,7 @@ class Diary(models.Model):
     
     public_TF = models.BooleanField(choices=TF_PUBLIC, default=True)
     comment_TF = models.BooleanField(choices=TF_COMMENT, default=True)
-    image = models.ImageField(blank=True, upload_to ='diary_img/')
+    image = models.ImageField(blank=True, default = "img_making.png", upload_to ='diary_img/')
     emotion = models.CharField(max_length=20)
     vector = models.CharField(max_length=65535)
     music_no = models.IntegerField()
@@ -46,3 +46,9 @@ class Music(models.Model):
     url = models.TextField()
     rate = models.FloatField(default=0)
     rate_cnt = models.IntegerField(default=0)
+
+class Comment(models.Model) :
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    diary = models.ForeignKey(Diary, on_delete=models.CASCADE)
+    content = models.TextField()
+    dt_created = models.DateField()
