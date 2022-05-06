@@ -46,7 +46,7 @@
     <div class="header">
       <a href="{% url 'cal:calendar' %}">&lt; 목록으로</a>
       {% if diary.author == user%}
-      <div class="buttons d-flex">
+      <div class="buttons d-flex flex-row-reverse">
         <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>
         <a class="btn btn-primary btn-sm" href="{% url 'diary-update' diary.id%}">수정</a>
         {%if not diary.rate%}

@@ -186,7 +186,7 @@ def rating(request) :
         diary.save()
         music.save()
 
-        return JsonResponse({'result':'success'})
+        return HttpResponse({'result':'success'})
 
 
 @login_required
