@@ -216,8 +216,6 @@ def rating(request) :
     if request.method == 'POST' :
         print(request)
         data = json.load(request)
-        # do something
-        # print(data)
         diary = Diary.objects.get(pk = data['diary_id'])
         music = Music.objects.get(pk = data['music_id'])
         
@@ -231,7 +229,7 @@ def rating(request) :
         diary.save()
         music.save()
 
-        return JsonResponse({'result':'success'})
+        return HttpResponse({'result':'success'})
 
 
 @login_required

@@ -67,7 +67,7 @@
     <div class="header">
       <a href="{% url 'cal:calendar' %}">&lt; 목록으로</a>
       {% if diary.author == user%}
-      <div class="buttons">
+      <div class="buttons d-flex flex-row">
         <a class="btn btn-primary btn-sm" href="{% url 'diary-delete' diary.id%}">삭제</a>
         <a class="btn btn-primary btn-sm" href="{% url 'diary-update' diary.id%}">수정</a>
         {%if not diary.rate%}
@@ -111,17 +111,38 @@
         </div>
       </div>
     </div>
-    <p>{{ music.title }}</p>
-    <p>{{ music.lyric }}</p>
-    <iframe width="560" height="315" 
-    src="https://www.youtube.com/embed/{{ music.url }}"
-    frameborder="0" 
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen></iframe>
+    
+    <div style="margin-top:100px">
+      <h2>추천 노래 & 다른사람의 일기</h2>
+    </div>
+    <div style="margin-bottom:50px">
+      <div style="float: left; padding-right:10px">
+        <iframe width="560" height="515" 
+        src="https://www.youtube.com/embed/{{ music.url }}"
+        frameborder="0" 
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
+      </div>
 
-    <p>{{ rec_diary.title }}</p>
-    <p>{{ rec_diary.content }}</p>
+      <div class="podo-card post" style=" height:515px">
+        {%if rec_diary.image%}
+          <img class="thumb" src="{{diary.image.url}}" alt="썸네일 이미지">
+        {%endif%}
+        <div class="content">
+          <h2 class="title">{{rec_diary.title}}</h2>
+          <div class="meta">
+            {{rec_diary.dt_created}}
+          </div>
+          <div class="meta">
+            {{ rec_diary.author.nickname }}
+          </div>
+          <a class="btn btn-primary" href="{% url 'diary-detail' rec_diary.id %}">자세히보기</a>
+        </div>
+      </div>
 
+    </div>
+    <p></p>
+    {%if diary.comment_TF %}
     <div class="card">
       <div class="card-header">
           <div class="col-md-12">
@@ -171,6 +192,7 @@
           </div>
       </div>
   </div>
+  {%endif%}
 
 </div>
 <script>

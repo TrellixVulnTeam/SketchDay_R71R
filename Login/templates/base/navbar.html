@@ -16,6 +16,8 @@
       <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
+            {% block navi %}
+            {% endblock navi %}
             <li><a class="nav-link" href="{% url 'main' %}">공유 일기</a></li> 
           {% if user.is_authenticated %}
             <li><a class="nav-link" href="{% url 'profile' user.id %}">내 프로필</a></li>
@@ -26,6 +28,7 @@
           </li>
 
           {% endif %}
+          
         </ul>
       </div>
     </div>
@@ -35,7 +38,7 @@
 {% endblock header %}
 
 {% block footer %}
-<footer class="site-footer">
+<footer class="site-footer navbar-fixed-bottom">
   <div class="max-content-width content">
     <div></div>
     <div>SketchDay  &copy; AIVLE</div>
