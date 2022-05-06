@@ -32,7 +32,8 @@ class Calendar(HTMLCalendar):
 			onclick_url = f'"/diary/new/{dt_selected}"'
 
 		if day != 0:
-			if day == datetime.today().day:
+			today = datetime.today()
+			if day == today.day and self.month == today.month and self.year == today.year:
 				mark = 'class=today'
 			return f'''<td onClick='location.href={onclick_url}' {mark} style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
 		return '<td class="blank"></td>'
