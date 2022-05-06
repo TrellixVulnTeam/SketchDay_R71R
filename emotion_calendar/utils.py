@@ -1,26 +1,28 @@
 from calendar import HTMLCalendar
 from datetime import datetime, timedelta
 from diary.models import Diary
-import datetime
+
 
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None):
 		self.year = year
 		self.month = month
+		self.today = datetime.today().day
 		self.img_dic = {
-			'행복' : 'happy.jpg',
-			'불안' : 'unrest.jpg',
-			'분노' : 'anger.jpg',
-			'슬픔' : 'sad.jpg',
-			'평온' : 'tranquility.jpg'
+			'행복' : 'happy.png',
+			'불안' : 'unrest.png',
+			'분노' : 'anger.png',
+			'슬픔' : 'sad.png',
+			'평온' : 'tranquility.png'
 		}
-		super(Calendar, self).__init__()
+		super(Calendar, self).__init__()	
 
 
 	def formatday(self, day, diarys):		
 		img_url = ''
 		diary = diarys.filter(dt_created__day=day)
 		dt_selected = ''
+		mark = ''
 
 		if diary.exists():
 			emotion = diary[0].emotion
@@ -31,8 +33,10 @@ class Calendar(HTMLCalendar):
 			onclick_url = f'"/diary/new/{dt_selected}"'
 
 		if day != 0:
-			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url} {dt_selected}</ul></td>'''
-		return '<td></td>'
+			if int(day) == self.today:
+				mark = 'class=today'
+			return f'''<td {mark} onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
+		return '<td class="blank"></td>'
 
 
 	def formatweek(self, theweek, diarys):
@@ -50,5 +54,6 @@ class Calendar(HTMLCalendar):
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
 			cal += f'{self.formatweek(week, diarys)}\n'
+		cal += '</table>'
 
 		return cal
