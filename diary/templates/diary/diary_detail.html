@@ -97,9 +97,11 @@
      </div>
     </div>
   </a>
+    <hr size="5px">
     <p class="item-detail">
       {{ diary.content |linebreaksbr }}
     </p>  
+    <hr size="5px">
     <p>{{ diary.emotion_val }}</p>
     </article>
     
@@ -150,7 +152,7 @@
     </div>
     <p></p>
     {%if diary.comment_TF %}
-    <div class="card">
+    <div class="card" style="margin-top:80px">
       <div class="card-header">
           <div class="col-md-12">
               {% csrf_token %}
