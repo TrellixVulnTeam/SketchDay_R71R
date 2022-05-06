@@ -175,8 +175,16 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL="account_email_confirmatio
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL="account_email_confirmation_done"
 ACCOUNT_EMAIL_SUBJECT_PREFIX =""
 
-# Email settings 이메일 인증을 위함 => 터미널 콘솔로 이메일 보내기
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Email settings 이메일 인증을 위함
+# gmail
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'rkdalstj4505@gmail.com'
+EMAIL_HOST_PASSWORD= 'eiybtpgtdhuijxca'
+
 
 # Django-debug-toolbar settings
 INTERNAL_IPS = ['127.0.0.1']

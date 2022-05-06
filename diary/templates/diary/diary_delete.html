@@ -1,8 +1,9 @@
-{% extends "base/navbar.html" %}
+{% extends "base/header.html" %}
 
 {% block title %}{{ diary.title }} | SketchDay{% endblock title %}
 
 {% block content %}
+
 <form class="podo-noti podo-confirm" method="post">
 {% csrf_token %}
   <span>정말 게시글을 삭제하시겠습니까?</span>
