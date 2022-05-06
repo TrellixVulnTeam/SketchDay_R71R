@@ -32,7 +32,9 @@ class Calendar(HTMLCalendar):
 			onclick_url = f'"/diary/new/{dt_selected}"'
 
 		if day != 0:
-			return f'''<td onClick='location.href={onclick_url}' style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
+			if day == datetime.today().day:
+				mark = 'class=today'
+			return f'''<td onClick='location.href={onclick_url}' {mark} style="cursor:pointer;"><span class='date'>{day}</span><ul>{img_url}</ul></td>'''
 		return '<td class="blank"></td>'
 
 	def formatweek(self, theweek, diarys):
