@@ -173,8 +173,6 @@ def rating(request) :
     if request.method == 'POST' :
         print(request)
         data = json.load(request)
-        # do something
-        # print(data)
         diary = Diary.objects.get(pk = data['diary_id'])
         music = Music.objects.get(pk = data['music_id'])
         
