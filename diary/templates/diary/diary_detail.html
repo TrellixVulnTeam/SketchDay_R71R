@@ -81,43 +81,50 @@
     </p>  
     <p>{{ diary.emotion_val }}</p>
     </article>
-    <h2>감정 상태</h2>
-    <div style="display: flex; justify-content: center">
-      <div class="chart-container" style="height: 500px; width:500px">
-        <p style="text-align: center; font-size: 1.5rem">오늘은 {{ diary.emotion }} 하셨군요!</p>
-        <div>
-          <canvas id="myChart"></canvas>
+    
+    <a href="javascript:doDisplay();"> <h2> >감정 상태 </h2></a>
+    <div id="emotionDIV">
+      <div style="display: flex; justify-content: center">
+        <div class="chart-container" style="height: 500px; width:500px">
+          <p style="text-align: center; font-size: 1.5rem">오늘은 {{ diary.emotion }} 하셨군요!</p>
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div style="margin-top:80px">
+      
+    <a href="javascript:doDisplay2();"> <h2>>추천 노래 & 다른사람의 일기</h2></a>
+    <div id="youtubeDIV">
+      <div style="margin-bottom:50px">
+        <div style="float: left; padding-right:10px">
+          <iframe width="560" height="515" 
+          src="https://www.youtube.com/embed/{{ music.url }}"
+          frameborder="0" 
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen></iframe>
+        </div>
+  
+        <div class="podo-card post" style=" height:515px">
+          {%if rec_diary.image%}
+            <img class="thumb" src="{{diary.image.url}}" alt="썸네일 이미지">
+          {%endif%}
+          <div class="content">
+            <h2 class="title">{{rec_diary.title}}</h2>
+            <div class="meta">
+              {{rec_diary.dt_created}}
+            </div>
+            <div class="meta">
+              {{ rec_diary.author.nickname }}
+            </div>
+            <a class="btn btn-primary" href="{% url 'diary-detail' rec_diary.id %}">자세히보기</a>
+          </div>
+        </div>
+        </div>
     </div>
     
-    <div style="margin-top:100px">
-      <h2>추천 노래 & 다른사람의 일기</h2>
-    </div>
-    <div style="margin-bottom:50px">
-      <div style="float: left; padding-right:10px">
-        <iframe width="560" height="515" 
-        src="https://www.youtube.com/embed/{{ music.url }}"
-        frameborder="0" 
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
-      </div>
-
-      <div class="podo-card post" style=" height:515px">
-        {%if rec_diary.image%}
-          <img class="thumb" src="{{diary.image.url}}" alt="썸네일 이미지">
-        {%endif%}
-        <div class="content">
-          <h2 class="title">{{rec_diary.title}}</h2>
-          <div class="meta">
-            {{rec_diary.dt_created}}
-          </div>
-          <div class="meta">
-            {{ rec_diary.author.nickname }}
-          </div>
-          <a class="btn btn-primary" href="{% url 'diary-detail' rec_diary.id %}">자세히보기</a>
-        </div>
-      </div>
 
     </div>
     <p></p>
@@ -355,6 +362,24 @@ function commentDelete(value) {
           },
       });
   }
+}
+
+function doDisplay(){
+	var con = document.getElementById("emotionDIV");
+	if(con.style.display=='none'){
+		con.style.display = 'block';
+	}else{
+		con.style.display = 'none';
+	}
+}
+
+function doDisplay2(){
+	var con = document.getElementById("youtubeDIV");
+	if(con.style.display=='none'){
+		con.style.display = 'block';
+	}else{
+		con.style.display = 'none';
+	}
 }
 
 </script>
