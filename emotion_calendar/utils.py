@@ -25,7 +25,7 @@ class Calendar(HTMLCalendar):
 
 		if diary.exists():
 			emotion = diary[0].emotion
-			img_url = f'<center><img width="50" height="50" src=/static/emotion_calendar/emotion/{self.img_dic[emotion]}></center>'
+			img_url = f'<center><img width="40" height="40" src=/static/emotion_calendar/emotion/{self.img_dic[emotion]}></center>'
 			onclick_url = f'"/diary/detail/{diary[0].id}"'
 		else:
 			dt_selected = f'{self.year}-{self.month}-{day}'
@@ -44,7 +44,7 @@ class Calendar(HTMLCalendar):
 	def formatmonth(self, user, withyear=True):
 		diarys = Diary.objects.filter(author=user, dt_created__month=self.month)
 		
-		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
+		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar" style="table-layout:fixed;">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
