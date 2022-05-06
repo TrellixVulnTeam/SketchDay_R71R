@@ -146,7 +146,7 @@
                           {% else  %}
                           <strong>{{ comment.writer }}</strong>
                           {% endif %}
-                          <span style="float:right">{{ comment.created }}</span>
+                          <span style="float:right">{{ comment.dt_created }}</span>
                           {% if comment.writer == request.user or request.user.level == '0' or request.user.level == '1' %}
                           <div>
                               <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>

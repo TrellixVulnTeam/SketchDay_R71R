@@ -194,13 +194,14 @@ def comment_write_view(request, pk):
     diary = get_object_or_404(Diary, id=pk)
     writer = request.POST.get('writer')
     content = request.POST.get('content')
+
     if content:
         comment = Comment.objects.create(diary=diary, content=content, author=request.user, dt_created=timezone.now())
         comment.save()
         data = {
-            'writer': writer,
+            'writer': request.user.nickname,
             'content': content,
-            'created': timezone.now(),
+            'created': '(방금 전)',
             'comment_id': comment.id
         }
         
