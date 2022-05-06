@@ -125,6 +125,7 @@ def diaryCreateView(request, dt_selected=None):
                     today = 1
                 if today == 1:
                     post.save()
+                    print('tex2art텍스트 : ', text)
                     async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
 
                     messages.success(request, '일기를 저장했습니다.')
