@@ -24,7 +24,7 @@ def get_secret(setting, secrets=secrets): #예외 처리
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
-SECRET_KEY = get_secret("SECRET_KEY")
+EMAIL_SECRET_KEY = get_secret("SECRET_KEY")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -195,7 +195,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rkdalstj4505@gmail.com'
-EMAIL_HOST_PASSWORD= SECRET_KEY
+EMAIL_HOST_PASSWORD= EMAIL_SECRET_KEY
 
 
 # Django-debug-toolbar settings
