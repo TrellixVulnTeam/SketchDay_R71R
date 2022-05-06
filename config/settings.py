@@ -7,12 +7,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+import os, json
 from django.contrib import messages
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+secret_file = os.path.join(BASE_DIR, 'secrets.json') #secrets.json
 
+with open(secret_file, 'r') as f: #open as secret.json
+    secrets = json.loads(f.read())
+    
+def get_secret(setting, secrets=secrets): #예외 처리
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
 
+SECRET_KEY = get_secret("SECRET_KEY")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -183,7 +195,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rkdalstj4505@gmail.com'
-# EMAIL_HOST_PASSWORD= 'eiybtpgtdhuijxca'
+EMAIL_HOST_PASSWORD= SECRET_KEY
 
 
 # Django-debug-toolbar settings

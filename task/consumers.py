@@ -12,6 +12,7 @@ from PIL import Image
 class BackgroundTaskConsumer(SyncConsumer) :        
     def sketch(self, message) :
         prompts = message['prompts']
+        print(prompts)
         output = 'static/diary_img/'+ message['userId'] + '.png'
         text2art = Text2Art()
         settings = text2art.do_init(prompts=prompts, output=output)
