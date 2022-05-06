@@ -25,6 +25,9 @@
 * {
   box-sizing: border-box;
 }
+.password-reset .podo-box .centered{
+  text-align: center;
+}
 
 body {
   display: flex;
@@ -725,7 +728,7 @@ body.with-background {
 .password-reset {
   margin: 131px auto;
   max-width: 644px;
-  width: 100%;
+  width: 50%;
   padding: 54px 107px;
 }
 

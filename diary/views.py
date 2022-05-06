@@ -128,7 +128,7 @@ def diaryCreateView(request, dt_selected=None):
                     async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
 
                     messages.success(request, '일기를 저장했습니다.')
-                    return redirect('cal:calendar')
+                    return redirect('diary-detail', diary_id= post.id)
                 else:
                     messages.warning(request, '작성한 일기가 있습니다.')
                     return redirect('cal:calendar')
@@ -149,14 +149,57 @@ def diaryCreateView(request, dt_selected=None):
         return redirect("account_email_confirmation_required")
 
 # 일기 수정
-class DiaryUpdateView(UpdateView):
-    model = Diary
-    form_class = DiaryCreateForm
-    template_name = 'diary/diary_form.html'
-    pk_url_kwarg = 'diary_id'
+def diaryUpdateView(request, diary_id, dt_selected=None):
+    object = get_object_or_404(Diary, id=diary_id)
+    if request.method == 'POST':
+        form = DiaryCreateForm(request.POST, instance=object)
+        current_id = User.objects.get(id=request.user.id)
+        if form.is_valid():
+            post = form.save(commit=True)
+            post.author = request.user  # 현재 로그인 user instance
+            post.vector = recommendation_ml.get_vector(post.content)
+            post.music_no = recommendation_ml.get_recommendation(post.vector)
+            emotion_model = emotional_analysis.EmotionAnalysis()
+            emotion_val = emotion_model.predict({"data":post.content})
+            post.emotion = emotion_val[1]
+            # print(emotion_val[0])
+            # print(type(emotion_val[0]))
+            post.emotion_value = json.dumps(emotion_val[0])
+
+            # prompt text 생성
+            text = make_prompts(post.content, emotion_val[1])
+            # background task에 전달
+            nick = User.objects.get(email=request.user).nickname
+
+            try:
+                today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
+            except ObjectDoesNotExist:
+                today = 1
+            if today == 1:
+                post.save()
+                async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
+
+                messages.success(request, '일기를 저장했습니다.')
+                return redirect('diary-detail', diary_id= diary_id)
+            else:
+                messages.warning(request, '작성한 일기가 있습니다.')
+                return redirect('diary-detail', diary_id= diary_id)
+    else:
+        form = DiaryCreateForm(instance = object)
+    return render(request, 'diary/diary_form.html',{
+        'form': form,
+    })
+
+# class DiaryUpdateView(UpdateView):
+#     model = Diary
+#     form_class = DiaryCreateForm
+#     template_name = 'diary/diary_form.html'
+#     pk_url_kwarg = 'diary_id'
     
-    def get_success_url(self):
-        return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+#     def get_success_url(self):
+#         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+
+
 
 # 일기 삭제
 class DiaryDeleteView(DeleteView):
@@ -194,13 +237,14 @@ def comment_write_view(request, pk):
     diary = get_object_or_404(Diary, id=pk)
     writer = request.POST.get('writer')
     content = request.POST.get('content')
+
     if content:
         comment = Comment.objects.create(diary=diary, content=content, author=request.user, dt_created=timezone.now())
         comment.save()
         data = {
-            'writer': writer,
+            'writer': request.user.nickname,
             'content': content,
-            'created': timezone.now(),
+            'created': '(방금 전)',
             'comment_id': comment.id
         }
         

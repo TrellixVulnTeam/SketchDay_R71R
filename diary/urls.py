@@ -10,18 +10,11 @@ urlpatterns = [
         views.UserDiaryListView.as_view(), 
         name='user-review-list'),
     
-    #일기 내용
-    # path('detail/<int:diary_id>/', 
-    #     views.DiaryDetailView.as_view(), 
-    #     name='diary-detail'),
+
     path('detail/<int:diary_id>/', 
         views.diaryDetailView, 
         name='diary-detail'),
     
-    #일기작성
-    # path('new/', 
-    #     views.DiaryCreateView.as_view(), 
-    #     name='diary-create'),
     path('new/<str:dt_selected>', 
         views.diaryCreateView, 
         name='diary-create_selected'),
@@ -32,7 +25,7 @@ urlpatterns = [
     
     #일기 수정
     path('<int:diary_id>/edit/', 
-        views.DiaryUpdateView.as_view(), 
+        views.diaryUpdateView, 
         name='diary-update'),
     
     #일기 삭제

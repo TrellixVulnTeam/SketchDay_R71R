@@ -42,6 +42,27 @@
   </div>
 </div>
 
+
+<div class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="post-detail">
     <div class="header">
       <a href="{% url 'cal:calendar' %}">&lt; 목록으로</a>
@@ -153,7 +174,7 @@
                           {% else  %}
                           <strong>{{ comment.writer }}</strong>
                           {% endif %}
-                          <span style="float:right">{{ comment.created }}</span>
+                          <span style="float:right">{{ comment.dt_created }}</span>
                           {% if comment.writer == request.user or request.user.level == '0' or request.user.level == '1' %}
                           <div>
                               <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
@@ -180,9 +201,9 @@
   </div>
   {%endif%}
 
-
 </div>
 <script>
+
 var emotion_pie = document.getElementById('myChart').getContext('2d');
 var emotionPieChart = new Chart(emotion_pie, {
     type: 'pie',
