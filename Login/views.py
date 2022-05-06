@@ -55,6 +55,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
     template_name = 'Login/profile_update_form.html'
 
+
     def get_object(self, queryset=None):
         return self.request.user
     
