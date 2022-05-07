@@ -11,6 +11,16 @@ from PIL import Image
 
 class BackgroundTaskConsumer(SyncConsumer) :        
     def sketch(self, message) :
+        # model에 데이터 저장
+        diary = Diary.objects.get(pk=message['diaryID'])
+        im = Image.open('media/img_making.png')
+        image_io = BytesIO()
+        im.save(image_io, format='PNG')
+
+        image_name = message['userId'] + str(message['diaryID']) + '.png'
+        diary.image.save(image_name, ContentFile(image_io.getvalue()))
+        diary.save()
+
         prompts = message['prompts']
         print(prompts)
         output = 'static/diary_img/'+ message['userId'] + '.png'

@@ -172,14 +172,15 @@ def diaryUpdateView(request, diary_id, dt_selected=None):
             # background task에 전달
             nick = User.objects.get(email=request.user).nickname
 
+            # 이미지 생성
+            async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':diary_id})
+
             try:
                 today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
             except ObjectDoesNotExist:
                 today = 1
             if today == 1:
                 post.save()
-                async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':post.id})
-
                 messages.success(request, '일기를 저장했습니다.')
                 return redirect('diary-detail', diary_id= diary_id)
             else:
