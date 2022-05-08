@@ -63,6 +63,16 @@ body.with-background {
   background-color: var(--site-header-background);
 }
 
+.navbar .logo {
+  display: block;
+  width: min-content;
+  margin: 0 auto;
+}
+.navbar .logo {
+  width: 92px;
+  height: 85px;
+}
+
 .site-header .logo {
   display: block;
   width: min-content;

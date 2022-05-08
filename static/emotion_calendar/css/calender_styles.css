@@ -1,6 +1,6 @@
 /* Common styles */
 body {
-    font-family: "ptsans", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
   }
   
   .left {
@@ -18,7 +18,13 @@ body {
     box-shadow: 0 0 0 0;
     margin-right: 3px;
   }
-  
+
+  .col-sm-12 {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    width: 100%;
+    margin-top: 100px;
+  }
   .clearfix {
     margin: 15px;
   }
