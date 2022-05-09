@@ -1,5 +1,3 @@
-from operator import mod
-from xmlrpc.client import Boolean
 from django.db import models
 from Login.models import User
 # Create your models here.

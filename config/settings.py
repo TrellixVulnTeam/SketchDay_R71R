@@ -7,17 +7,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os, json
+import os
+import json
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-secret_file = os.path.join(BASE_DIR, 'secrets.json') #secrets.json
+secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json
 
-with open(secret_file, 'r') as f: #open as secret.json
+with open(secret_file, 'r') as f: # open as secret.json
     secrets = json.loads(f.read())
     
-def get_secret(setting, secrets=secrets): #예외 처리
+def get_secret(setting, secrets=secrets): # 예외 처리
     try:
         return secrets[setting]
     except KeyError:
@@ -151,7 +152,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ BASE_DIR , 'static']
+STATICFILES_DIRS = [BASE_DIR , 'static']
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/uploads/'
 
@@ -174,19 +175,19 @@ LOGIN_REDIRECT_URL="cal:calendar" # 로그인을 하면 calendar로 이동
 ACCOUN_LOGOUT_REDIRECT_URL= "account_login" # 로그아웃 하면 로그인으로
 LOGIN_URL = 'account_login' # 로그인이 안 된다면 로그인 페이지로 이동
 ACCOUNT_LOGOUT_ON_GET=True # 바로 로그아웃 (기본 값은 False)
-ACCOUNT_AUTHENTICATION_METHOD="email"  # email로 유저 로그인
-ACCOUNT_EMAIL_REQUIRED = True  #회원가입시 email 필수
-ACCOUNT_USERNAME_REQUIRED = False #회원가입시 username 선택
+ACCOUNT_AUTHENTICATION_METHOD= "email"  # email로 유저 로그인
+ACCOUNT_EMAIL_REQUIRED = True  # 회원가입시 email 필수
+ACCOUNT_USERNAME_REQUIRED = False # 회원가입시 username 선택
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
-ACCOUNT_EMAIL_VARIFICATION ="optional" # 인증 하지 않아도 로그인 가능
+ACCOUNT_EMAIL_VARIFICATION = "optional" # 인증 하지 않아도 로그인 가능
 ACCOUNT_SESSION_REMEMBER= True # 유저 기억
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True #이메일 인증링크로 들어가면 바로인증 되게함
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True # 이메일 인증링크로 들어가면 바로인증 되게함
 
 
 # 로그인시 이메일 인증이 되었을때 /되지 않았을때 인증 URL 설정
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL="account_email_confirmation_done"
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL="account_email_confirmation_done"
-ACCOUNT_EMAIL_SUBJECT_PREFIX =""
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL= "account_email_confirmation_done"
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL= "account_email_confirmation_done"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 # Email settings 이메일 인증을 위함
 # gmail
