@@ -41,7 +41,7 @@ class EmotionAnalysis:
     def __init__(self):
         pass
     def predict(self, input_data):
-        max_len = 100
+        max_len = 500
         batch_size = 32
         
         data = [input_data["data"], '0']
