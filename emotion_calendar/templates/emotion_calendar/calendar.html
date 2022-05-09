@@ -6,8 +6,6 @@
 
 {% load static %}
 {% block content %}
-<!doctype html>
-<html lang="ko">
 
 <head>
   <!-- Required meta tags -->
@@ -38,7 +36,22 @@ crossorigin="anonymous"></script>
 crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 crossorigin="anonymous"></script>
-
+{% if messages %}
+  {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible alert-warning">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <h4 class="alert-heading">{{ message.tag }}</h4>
+              <p class="mb-0">{{ message.tag }}{{ message }}</p>
+      </div>
+  {% endfor %}
+{% endif %}
+<script>
+  window.setTimeout(function() {
+    $(".alert-dismissible").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove();
+    });
+}, 2000);
+</script>
   <div class="container mt-4 mb-4">
     <div class="row">
       <div class="col-sm-12">
@@ -82,7 +95,6 @@ crossorigin="anonymous"></script>
     </div>
   </div>
 </div>
-
 <script>
   var emotion_line = document.getElementById('monthChart').getContext('2d');
   var emotionLineChart = new Chart(emotion_line, {
@@ -142,5 +154,6 @@ crossorigin="anonymous"></script>
         indexAxis: 'y',
       }
   });
+
 </script>
 {% endblock content %}

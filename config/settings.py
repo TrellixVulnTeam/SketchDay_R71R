@@ -32,7 +32,7 @@ EMAIL_SECRET_KEY = get_secret("SECRET_KEY")
 SECRET_KEY = '#*s_so_hno1sj=3!6u4#zy_=q0ppng4oszaf@lo5u2gwg+$6d7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
