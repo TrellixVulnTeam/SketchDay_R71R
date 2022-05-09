@@ -46,8 +46,8 @@ def papago(text) :
         print("Error Code:" , rescode)
 
 def make_prompts(text, sentiment) :
-    #변역
-    text_en_papago = papago(text)
+    #번역
+    text_en_papago = papago(text).lower()
 
     tokens = []
     tokens.append(' '.join(word for word in text_en_papago.split() if not word in stop_words))
@@ -57,7 +57,7 @@ def make_prompts(text, sentiment) :
     # 표제어 추출
     result_pre_lem = [token.tokenize(i) for i in tokens]
     middel_pre_lem = [r for i in result_pre_lem for r in i]
-    final_lem = [lemmatizer.lemmatize(i) for i in middel_pre_lem if not i in stop_words]
+    final_lem = [lemmatizer.lemmatize(i) for i in middel_pre_lem if i not in stop_words]
 
     # 빈도수
     english = Counter(final_lem)
