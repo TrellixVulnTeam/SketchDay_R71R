@@ -1,9 +1,10 @@
 from calendar import HTMLCalendar
-from datetime import datetime, timedelta
+from datetime import datetime
 from diary.models import Diary
 
 
 class Calendar(HTMLCalendar):
+    
 	def __init__(self, year=None, month=None):
 		self.year = year
 		self.month = month
@@ -15,6 +16,7 @@ class Calendar(HTMLCalendar):
 			'슬픔' : 'sad.png',
 			'평온' : 'tranquility.png'
 		}
+
 		super(Calendar, self).__init__()	
 
 	def formatday(self, day, diarys):		

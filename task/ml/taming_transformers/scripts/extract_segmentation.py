@@ -1,14 +1,11 @@
 import sys, os
 import numpy as np
-import scipy
 import torch
 import torch.nn as nn
-from scipy import ndimage
-from tqdm import tqdm, trange
+from tqdm import tqdm
 from PIL import Image
 import torch.hub
 import torchvision
-import torch.nn.functional as F
 
 # download deeplabv2_resnet101_msc-cocostuff164k-100000.pth from
 # https://github.com/kazuto1011/deeplab-pytorch/releases/download/v1.0/deeplabv2_resnet101_msc-cocostuff164k-100000.pth
@@ -18,7 +15,7 @@ CKPT_PATH = "TODO"
 rescale = lambda x: (x + 1.) / 2.
 
 def rescale_bgr(x):
-    x = (x+1)*127.5
+    x = (x + 1)*127.5
     x = torch.flip(x, dims=[0])
     return x
 
@@ -86,7 +83,7 @@ def save_segmentation(segmentation, path):
     assert len(segmentation.shape)==4
     assert segmentation.shape[0]==1
     for seg in segmentation:
-        seg = seg.permute(1,2,0).numpy().squeeze().astype(np.uint8)
+        seg = seg.permute(1, 2, 0).numpy().squeeze().astype(np.uint8)
         seg = Image.fromarray(seg)
         seg.save(path)
 

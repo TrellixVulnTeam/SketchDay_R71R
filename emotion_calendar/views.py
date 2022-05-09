@@ -3,7 +3,8 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 import calendar
 from .utils import Calendar
-from diary.models import *
+from diary.models import Diary
+from Login.models import User
 import json
 from braces.views import LoginRequiredMixin
 # wordCloud

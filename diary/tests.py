@@ -1,5 +1,6 @@
 from django.test import TestCase
-import sqlite3, pandas as pd
+import sqlite3
+import pandas as pd
 # Create your tests here.
 class MLTests(TestCase):
     print('load sql')
