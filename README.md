@@ -1,4 +1,5 @@
 ![화면 캡처 2022-04-29 174015](https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png)
+## [SketchDay 접속 링크](http://58.236.95.130:9999/)를 통해서 서비스 이용이 가능합니다!!
 
 # :blue_book:SketchDay : 내 일기의 감정을 통하여 노래를 추천 받고 그림일기로 볼 수 있는 서비스
 > 2022.04.11 ~ 2022.05.10 AI 빅프로젝트
@@ -8,7 +9,7 @@
 
 [2. 배경 및 목적](#2-배경-및-목적)
 
-[3. 서비스 화면](#3-서비스-화면)
+[3. 주요 서비스 화면](#3-주요-서비스-화면)
 
 [4. Service Flow](#4-service-flow)
 
@@ -41,7 +42,8 @@
   * 내가 작성한 일기와 비슷한 다른 사용자 일기 추천
   * 사용자가 작성 한 일기를 AI를 통해 요약해서 그림일기로 표현
   * 작성된 일기 데이터를 통해 캘린더에 감정 이모티콘 표시 및 워드 클라우드 생성
-# 3. 서비스 화면
+# 3. 주요 서비스 화면
+* 토글 클릭하시면 이미지 확인이 가능합니다.
 <details>
     <summary>메인 달력화면</summary>
  
@@ -52,6 +54,13 @@
     <summary>결과창</summary>
  
 ![InkedKakaoTalk_20220510_131857649_LI](https://user-images.githubusercontent.com/90138160/167750556-8a1a5de2-7f67-4162-a6dc-3ac767bdf6ff.jpg)
+ 
+</details>
+
+<details>
+    <summary>공유 일기 리스트</summary>
+ 
+![image](https://user-images.githubusercontent.com/90138160/167752496-7146bf10-3e1a-42ee-ab63-b34f6107ed1b.png)
  
 </details>
 
@@ -97,4 +106,4 @@
 
 ### 13. python manage.py runserver
 
-# [SketchDay 접속 링크](http://58.236.95.130:9999/)를 통해서 서비스 이용이 가능합니다!!
+
