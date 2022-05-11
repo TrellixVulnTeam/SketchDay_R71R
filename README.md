@@ -8,13 +8,17 @@
 
 [2. 배경 및 목적](#2-배경-및-목적)
 
-[3. Service Flow](#3-service-flow)
+[3. 서비스 화면](#3-서비스-화면)
 
-[4. Architecture - 3 - Tier](#4-architecture---3---tier)
+[4. Service Flow](#4-service-flow)
 
-[5. ERD](#5-erd)
+[5. Architecture](#5-architecture)
 
-[6. 실행 방법](#6-실행-방법)
+[6. ERD](#6-erd)
+
+[7. 실행 방법](#7-실행-방법)
+
+
 # 1. 조원 소개
 #### [5조]수도권 2반 2조
 >  김동현(조장), 강민서, 김세진, 전성호, 황인원
@@ -37,18 +41,27 @@
   * 사용자가 작성 한 일기를 AI를 통해 요약해서 그림일기로 표현
   * 사용자끼리 일기 공유 및 소통(쪽지 및 댓글)
   * 작성된 일기 데이터를 통해 캘린더에 감정 이모티콘 표시 및 워드 클라우드 생성
+# 3. 서비스 화면
+<details>
+    <summary>결과창</summary>
  
-# 3. Service Flow
+![InkedKakaoTalk_20220510_131857649_LI](https://user-images.githubusercontent.com/90138160/167750556-8a1a5de2-7f67-4162-a6dc-3ac767bdf6ff.jpg)
+ 
+</details>
+
+
+
+# 4. Service Flow
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
 
-# 4. Architecture - 2 - Tier
+# 5. Architecture
 ![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167749427-fdfed6e1-6316-4c36-94a0-27e96ad70f84.PNG)
 ![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
 )
 )
-# 5. ERD
+# 6. ERD
 ![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
-# 6. 실행 방법
+# 7. 실행 방법
 1. 가상 환경 구축하기
 2. 아래의 명령어를 입력한다.
 ```
