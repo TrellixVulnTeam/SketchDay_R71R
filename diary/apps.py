@@ -1,9 +1,5 @@
 from django.apps import AppConfig
-from gensim.test.utils import common_texts
-from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
-import gensim.downloader
-from sklearn.neighbors import NearestNeighbors
 import pandas as pd
 import joblib
 

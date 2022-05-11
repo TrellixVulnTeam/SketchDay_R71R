@@ -1,6 +1,4 @@
-import email
-import imp
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
@@ -9,10 +7,7 @@ from django.utils import timezone
 from allauth.account.models import EmailAddress
 from allauth.account.utils import send_email_confirmation
 # generic view
-from django.views.generic import ListView, UpdateView, DeleteView
-from numpy import rec
-from sympy import Id
-from braces.views import LoginRequiredMixin
+from django.views.generic import ListView, DeleteView
 
 from diary.models import Diary, Comment
 from diary.models import Music
@@ -22,11 +17,8 @@ from diary.forms import DiaryCreateForm
 from .ml_models import emotional_analysis
 from .ml_models import recommendation_ml
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
-
-from diary import apps
-
 from .ml_models.make_text2art import make_prompts
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
@@ -45,9 +37,9 @@ class MainView(ListView):
     template_name = 'diary/diary.html'
     context_object_name = 'diarys'
     paginate_by = 8
+    
     def get_queryset(self):
         return Diary.objects.filter(public_TF=True).order_by('-dt_created')
-
 # 내 일기 전체
 class UserDiaryListView(ListView):
     model = Diary
@@ -60,7 +52,7 @@ class UserDiaryListView(ListView):
         if user_id == self.request.user:
             return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
         else:
-            return Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')
+            return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -79,11 +71,7 @@ def diaryDetailView(request, diary_id):
 
     db_music.url = db_music.url[17:]
     comments = Comment.objects.filter(diary=diary_id)
-
-    try:
-        qs.emotion_value = jsonDec.decode(qs.emotion_value)
-    except:
-        pass
+    qs.emotion_value = jsonDec.decode(qs.emotion_value)
     context = {'diary': qs,
             'music': db_music,
             'rec_diary': db_rec_diary,
@@ -174,17 +162,16 @@ def diaryUpdateView(request, diary_id, dt_selected=None):
 
             # 이미지 생성
             async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':diary_id})
-
+            
             try:
                 today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
             except ObjectDoesNotExist:
                 today = 1
             if today == 1:
                 post.save()
-                messages.success(request, '일기를 저장했습니다.')
+                messages.success(request, '일기를 수정했습니다.')
                 return redirect('diary-detail', diary_id= diary_id)
             else:
-                messages.warning(request, '작성한 일기가 있습니다.')
                 return redirect('diary-detail', diary_id= diary_id)
     else:
         form = DiaryCreateForm(instance = object)
@@ -197,9 +184,9 @@ def diaryUpdateView(request, diary_id, dt_selected=None):
 #     form_class = DiaryCreateForm
 #     template_name = 'diary/diary_form.html'
 #     pk_url_kwarg = 'diary_id'
-    
 #     def get_success_url(self):
 #         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+
 
 
 
@@ -237,19 +224,17 @@ def rating(request) :
 @login_required
 def comment_write_view(request, pk):
     diary = get_object_or_404(Diary, id=pk)
-    writer = request.POST.get('writer')
     content = request.POST.get('content')
 
     if content:
         comment = Comment.objects.create(diary=diary, content=content, author=request.user, dt_created=timezone.now())
         comment.save()
         data = {
-            'writer': request.user.nickname,
+            'writer': comment.author.nickname,
             'content': content,
             'created': '(방금 전)',
             'comment_id': comment.id
         }
-        
         return HttpResponse(json.dumps(data, cls=DjangoJSONEncoder), content_type = "application/json")
 
 @login_required

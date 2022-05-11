@@ -1,9 +1,7 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from allauth.account.views import PasswordChangeView
 from django.urls import reverse
-from calendar import HTMLCalendar
 from django.views.generic import DetailView, UpdateView
-from matplotlib.style import context
 from diary.models import Diary
 from Login.models import User
 from .forms import ProfileForm
@@ -30,10 +28,11 @@ class ProfileView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('user_id')
+        
         if user_id == self.request.user:
-            context['user_diary'] =  Diary.objects.filter(author__id = user_id).order_by("-dt_created")[:4]
+            context['user_diary'] = Diary.objects.filter(author__id = user_id).order_by("-dt_created")[:4]
         else:
-            context['user_diary'] =  Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')[:4]
+            context['user_diary'] = Diary.objects.filter(author__id = user_id).order_by('-dt_created')[:4]
         return context
 
 
