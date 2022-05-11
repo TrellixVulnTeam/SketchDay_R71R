@@ -50,6 +50,10 @@
  
 ![image](https://user-images.githubusercontent.com/90138160/167751290-e1fe1f35-2cc1-47b4-99b4-f7062553dde0.png)
  
+ <summary>이번 달 워드클라우드 및 감정선</summary>
+ 
+ ![image](https://user-images.githubusercontent.com/90138160/167753532-4a80d045-79a1-40b5-83d5-eff6424eb57a.png)
+ 
 </details>
 <details>
     <summary>결과창</summary>
