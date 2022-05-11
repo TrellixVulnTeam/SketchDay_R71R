@@ -42,8 +42,8 @@
 # 3. Service Flow
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
 
-# 4. Architecture - 2 - Tier!
-[아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167748812-fb3b1cbf-6a80-4fff-96d7-382181d0edb2.PNG)
+# 4. Architecture - 2 - Tier
+![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167748812-fb3b1cbf-6a80-4fff-96d7-382181d0edb2.PNG)
 ![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
 )
 )
