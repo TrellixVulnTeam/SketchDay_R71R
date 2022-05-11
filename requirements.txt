@@ -12,8 +12,6 @@ onnxruntime == 1.8.0
 sentencepiece == 0.1.96
 torch == 1.11.0
 transformers == 4.18.0
-# git+https://git@github.com/SKTBrain/KoBERT.git@master
-# git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf
 gensim
 rhinoMorph
 jpype1
@@ -26,9 +24,11 @@ torchvision
 torch_optimizer
 ftfy
 kornia==0.6.1
-git+https://github.com/pvigier/perlin-numpy
-ftfy regex tqdm omegaconf pytorch-lightning
-# ftfy regex tqdm omegaconf pytorch-lightning
+git+https://github.com/pvigier/perlin-numpy 
+regex 
+tqdm 
+omegaconf 
+pytorch-lightning
 imageio-ffmpeg
 imageio
 moviepy
@@ -39,3 +39,5 @@ asgiref==3.3.4
 matplotlib
 wordcloud
 sympy
+boto3
+pandas

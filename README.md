@@ -41,9 +41,12 @@
  
 # 3. Service Flow
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
+
 # 4. Architecture - 3 - Tier
 ![image](https://user-images.githubusercontent.com/90138160/165702512-c5253680-c504-4c28-902c-43a4f83885bd.png)
-![architecture](https://user-images.githubusercontent.com/45118610/167746655-93b1117f-a95b-48bf-8dea-73e5f3921ff0.PNG)
+![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
+)
+)
 # 5. ERD
 ![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
 # 6. 실행 방법
