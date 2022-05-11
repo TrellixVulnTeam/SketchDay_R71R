@@ -39,7 +39,7 @@
 &nbsp;
 
 * **주요 기능**
-  * 작성된 일기를 분석하여 감정 및 주제를 추출하고 표현된 감정 및 주제에 알맞은 노래 추천
+  * 작성된 일기를 분석하여 감정 및 주제를 추출하고 표현된 감정 및 주제에 알맞은 노래 추천  (노래 평가 가능)
   * 내가 작성한 일기와 비슷한 다른 사용자 일기 추천
   * 사용자가 작성 한 일기를 AI를 통해 요약해서 그림일기로 표현
   * 작성된 일기 데이터를 통해 캘린더에 감정 이모티콘 표시 및 워드 클라우드 생성
@@ -68,6 +68,14 @@
 ![image](https://user-images.githubusercontent.com/90138160/167752496-7146bf10-3e1a-42ee-ab63-b34f6107ed1b.png)
  
 </details>
+
+<details>
+    <summary>내 프로필</summary>
+ 
+![image](https://user-images.githubusercontent.com/90138160/167753541-03f101ad-23b5-48b2-bdf1-c20b8f86eb6c.png)
+ 
+</details>
+
 
 # 4. Service Flow
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
