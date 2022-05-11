@@ -1,5 +1,7 @@
 ![화면 캡처 2022-04-29 174015](https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png)
-## [SketchDay 접속 링크](http://58.236.95.130:9999/)를 통해서 서비스 이용이 가능합니다!!
+## [SketchDay 접속 링크](http://58.236.95.130:9999/)를 통해서 저희의 서비스 이용이 가능합니다!!
+
+---
 
 # :blue_book:SketchDay : 내 일기의 감정을 통하여 노래를 추천 받고 그림일기로 볼 수 있는 서비스
 > 2022.04.11 ~ 2022.05.10 AI 빅프로젝트
@@ -75,35 +77,28 @@
 ![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
 
 # 7. 실행 방법
+### 1. 파이썬 설치(v3.x)
 
-### 1. 가상 환경 구축하기
+### 2. 파이썬 가상환경 생성 및 실행
 
-### 2. 아래의 명령어를 입력한다.
+### 3. 원하는 위치에서 SketchDay 프로젝트 clone 진행 및 프로젝트 폴더 최상단으로 위치 이동
 
-### 3. 파이썬 설치(v3.x)
+### 4. pip install -r requirements.txt 실행
 
-### 4. 파이썬 가상환경 생성 및 실행
+### 5. [구글 드라이브](https://drive.google.com/file/d/153Cqkgfj_U7C0oEaAAjgtezDVEl3YmqZ/view?usp=sharing) 클릭해서 압축파일(용량이 큰 모델 및 디폴트 이미지 파일) 다운로드 후 압축 해제
 
-### 5. 원하는 위치에서 SketchDay 프로젝트 clone 진행 및 프로젝트 폴더 최상단으로 위치 이동
-
-### 6. pip install -r requirements.txt 실행
-
-### 7. [구글 드라이브](https://drive.google.com/file/d/153Cqkgfj_U7C0oEaAAjgtezDVEl3YmqZ/view?usp=sharing) 클릭해서 압축파일(용량이 큰 모델 및 디폴트 이미지 파일) 다운로드 후 압축 해제
-
-### 8. 압축 해제후 
+### 6. 압축 해제후 
 #### - 다운로드 파일의 media 파일은 프로젝트 최상단에 복사
 #### - 다운로드 파일의 diary/ml_models 내의 모델 파일도 프로젝트파일 내의 같은 위치에 복사
 
 #### - 다운로드 파일의 task/ml 내의 models 폴더를 프로젝트파일 내의 같은 위치에 복사
 
-### 9. python manage.py makemigrations 실행
+### 7. python manage.py makemigrations 실행
 
-### 10. python manage.py migrate 실행
+### 8. python manage.py migrate 실행
 
-### 11. 각 환경에 맞는 [redis-server](https://redis.io/docs/getting-started/) 공식문서 링크에서 설치 후 실행
+### 9. 각 환경에 맞는 [redis-server](https://redis.io/docs/getting-started/) 공식문서 링크에서 설치 후 실행
 
-### 12. python manage.py runworker background_tasks 실행
+### 10. python manage.py runworker background_tasks 실행
 
-### 13. python manage.py runserver
-
-
+### 11. python manage.py runserver
