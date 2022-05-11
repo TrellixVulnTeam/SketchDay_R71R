@@ -82,7 +82,10 @@
 
 
 # 4. Service Flow
-![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
+<p align="center">
+ <img src="https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png"> 
+</p>
+
 
 # 5. Architecture
 ![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167749427-fdfed6e1-6316-4c36-94a0-27e96ad70f84.PNG)
