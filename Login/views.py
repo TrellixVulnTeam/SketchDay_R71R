@@ -32,7 +32,7 @@ class ProfileView(DetailView):
         if user_id == self.request.user:
             context['user_diary'] = Diary.objects.filter(author__id = user_id).order_by("-dt_created")[:4]
         else:
-            context['user_diary'] = Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')[:4]
+            context['user_diary'] = Diary.objects.filter(author__id = user_id).order_by('-dt_created')[:4]
         return context
 
 
