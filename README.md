@@ -42,7 +42,7 @@
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
 
 # 4. Architecture - 2 - Tier
-![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167749006-aa045d6b-1233-428f-9405-ac2761208176.PNG)
+![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167749427-fdfed6e1-6316-4c36-94a0-27e96ad70f84.PNG)
 ![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
 )
 )
