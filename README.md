@@ -43,11 +43,19 @@
   * 작성된 일기 데이터를 통해 캘린더에 감정 이모티콘 표시 및 워드 클라우드 생성
 # 3. 서비스 화면
 <details>
+    <summary>메인 달력화면</summary>
+ 
+![image](https://user-images.githubusercontent.com/90138160/167751290-e1fe1f35-2cc1-47b4-99b4-f7062553dde0.png)
+ 
+</details>
+<details>
     <summary>결과창</summary>
  
 ![InkedKakaoTalk_20220510_131857649_LI](https://user-images.githubusercontent.com/90138160/167750556-8a1a5de2-7f67-4162-a6dc-3ac767bdf6ff.jpg)
  
 </details>
+
+
 
 
 
