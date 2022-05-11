@@ -1,7 +1,5 @@
 <p align="center">
- <img src="https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png">
-![화면 캡처 2022-04-29 174015](https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png)
- 
+ <img src="https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png"> 
 </p>
 
 
