@@ -55,18 +55,12 @@
  
 </details>
 
-
-
-
-
 # 4. Service Flow
 ![에이블스쿨 AI 빅프로젝트_Flow Chart_05조](https://user-images.githubusercontent.com/90138160/165701902-97f4d696-584c-4155-8116-7c38d8e43640.png)
 
 # 5. Architecture
 ![아키텍처 정의서](https://user-images.githubusercontent.com/45118610/167749427-fdfed6e1-6316-4c36-94a0-27e96ad70f84.PNG)
 ![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
-# 5. ERD
-![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
 
 # 6. ERD
 ![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
