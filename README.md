@@ -67,7 +67,11 @@
 ![architecture](https://user-images.githubusercontent.com/29485153/167747788-55849e07-8379-4d9a-9a93-e36383704e56.png)
 # 5. ERD
 ![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
-# 6. 실행 방법
+
+# 6. ERD
+![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
+
+# 7. 실행 방법
 
 ### 1. 가상 환경 구축하기
 
@@ -99,12 +103,3 @@
 
 ### 13. python manage.py runserver
 
-# 6. ERD
-![에이블스쿨 AI 빅프로젝트_ERD_05조 (1) (1)](https://user-images.githubusercontent.com/66732995/167747338-8f355dcc-b2aa-48c0-a31e-b95080965fb0.png)
-# 7. 실행 방법
-1. 가상 환경 구축하기
-2. 아래의 명령어를 입력한다.
-```
-pip install -r requirements.txt
-```
->>>>>>> 93cbff00d51526050386586c45435da3bb994546
