@@ -52,7 +52,7 @@ class UserDiaryListView(ListView):
         if user_id == self.request.user:
             return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
         else:
-            return Diary.objects.filter(public_TF=True, author__id = user_id).order_by('-dt_created')
+            return Diary.objects.filter(author__id = user_id).order_by('-dt_created')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -162,17 +162,16 @@ def diaryUpdateView(request, diary_id, dt_selected=None):
 
             # 이미지 생성
             async_to_sync(channel_layer.send)('background_tasks', {'type':'sketch', 'prompts':text, 'userId':nick, 'diaryID':diary_id})
-
+            
             try:
                 today = Diary.objects.get(author_id = current_id, dt_created = post.dt_created)
             except ObjectDoesNotExist:
                 today = 1
             if today == 1:
                 post.save()
-                messages.success(request, '일기를 저장했습니다.')
+                messages.success(request, '일기를 수정했습니다.')
                 return redirect('diary-detail', diary_id= diary_id)
             else:
-                messages.warning(request, '작성한 일기가 있습니다.')
                 return redirect('diary-detail', diary_id= diary_id)
     else:
         form = DiaryCreateForm(instance = object)
@@ -185,9 +184,9 @@ def diaryUpdateView(request, diary_id, dt_selected=None):
 #     form_class = DiaryCreateForm
 #     template_name = 'diary/diary_form.html'
 #     pk_url_kwarg = 'diary_id'
-    
 #     def get_success_url(self):
 #         return reverse('diary-detail', kwargs={'diary_id':self.object.id})
+
 
 
 
