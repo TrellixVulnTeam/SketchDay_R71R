@@ -1,4 +1,10 @@
+<p align="center">
+ 
 ![화면 캡처 2022-04-29 174015](https://user-images.githubusercontent.com/90138160/165911868-ce7b9b0e-08c7-4563-b6ee-6a387c11626e.png)
+ 
+</p>
+
+
 ## [SketchDay 접속 링크](http://58.236.95.130:9999/)를 통해서 저희의 서비스 이용이 가능합니다!!
 
 
