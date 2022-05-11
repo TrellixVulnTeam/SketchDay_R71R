@@ -171,13 +171,13 @@
                       {% if comment.deleted %}
                       <span>삭제된 댓글입니다.</span><hr>
                       {% else %}
-                          {% if comment.writer == diary.writer %}
-                          <strong>{{ comment.writer }}&nbsp;<span>(글쓴이)</span></strong>
+                          {% if comment.author == diary.author %}
+                          <strong>{{ comment.author.nickname }}&nbsp;<span>(글쓴이)</span></strong>
                           {% else  %}
-                          <strong>{{ comment.writer }}</strong>
+                          <strong>{{ comment.author.nickname }}</strong>
                           {% endif %}
                           <span style="float:right">{{ comment.dt_created }}</span>
-                          {% if comment.writer == request.user or request.user.level == '0' or request.user.level == '1' %}
+                          {% if comment.author == request.user or request.user.level == '0' or request.user.level == '1' %}
                           <div>
                               <div style="white-space:pre-wrap; text-align:left;">{{ comment.content }}</div>
                               <div style="text-align: right;">
